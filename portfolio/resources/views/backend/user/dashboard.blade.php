@@ -42,19 +42,19 @@
     <div class="main-wrapper">
 
         <!-- partial:partials/_sidebar.html -->
-        @include('backend.admin.body.sidebar')
+        @include('backend.user.body.sidebar')
         <!-- partial -->
 
         <div class="page-wrapper">
 
             <!-- partial:partials/_navbar.html -->
-            @include('backend.admin.body.navbar')
+            @include('backend.user.body.navbar')
             <!-- partial -->
 
             @yield('content')
 
             <!-- partial:partials/_footer.html -->
-            @include('backend.admin.body.footer')
+            @include('backend.user.body.footer')
             <!-- partial -->
 
         </div>
