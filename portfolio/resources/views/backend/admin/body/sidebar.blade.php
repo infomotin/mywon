@@ -32,7 +32,10 @@
                             <a href="{{ route('hero.index') }}"
                                 class="nav-link">Hero</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a href="{{ route('service.index') }}"
+                                class="nav-link">Service</a>
+                        </li>
                     </ul>
                 </div>
             </li>

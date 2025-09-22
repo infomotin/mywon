@@ -1,6 +1,9 @@
 <div id="service-wrapper" class="popup_content_area zoom-anim-dialog mfp-hide">
+   {{-- @php 
+   $service = \App\Models\Services::find($service_id);
+   @endphp --}}
     <div class="popup_modal_img">
-       <img src="{{ asset('/Fontend/assets/img/services/modal-img.jpg') }}" alt="" />
+       {{-- <img src="{{ asset('upload/service/' . $service->service_image) }}" alt="" /> --}}
     </div>
 
     <div class="popup_modal_content">

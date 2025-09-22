@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\HeroController;
+use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\frontend\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
@@ -36,6 +37,18 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+//ServiceController
+Route::middleware('auth')->group(function () {
+    Route::controller(ServiceController::class)->group(function () {
+        Route::get('/service', 'index')->name('service.index');
+        Route::get('/service/create', 'create')->name('service.create');
+        Route::post('/service/store', 'store')->name('service.store');
+        Route::get('/service/edit/{id}', 'edit')->name('service.edit');
+        Route::post('/service/update/{id}', 'update')->name('service.update');
+        // Route::delete('/service/destroy/{id}', 'destroy')->name('service.destroy');
+        Route::get('/service/{id}/popup', 'popup')->name('service.popup');
+    });
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
