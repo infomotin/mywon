@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\ServiceController;
+use App\Http\Controllers\Backend\PortfolioContorller;
 use App\Http\Controllers\frontend\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
@@ -49,6 +50,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/service/{id}/popup', 'popup')->name('service.popup');
     });
 });
+
+//PortfolioContorller
+Route::middleware('auth')->group(function () {
+    Route::controller(PortfolioContorller::class)->group(function () {
+        Route::get('/portfolio', 'index')->name('portfolio.index');
+        Route::get('/portfolio/create', 'create')->name('portfolio.create');
+        Route::post('/portfolio/store', 'store')->name('portfolio.store');
+        Route::get('/portfolio/edit/{id}', 'edit')->name('portfolio.edit');
+        Route::post('/portfolio/update/{id}', 'update')->name('portfolio.update');
+        // Route::delete('/portfolio/destroy/{id}', 'destroy')->name('portfolio.destroy');
+    });
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

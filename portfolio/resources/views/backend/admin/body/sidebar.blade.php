@@ -36,6 +36,10 @@
                             <a href="{{ route('service.index') }}"
                                 class="nav-link">Service</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('portfolio.index') }}"
+                                class="nav-link">Portfolio</a>
+                        </li>
                     </ul>
                 </div>
             </li>
