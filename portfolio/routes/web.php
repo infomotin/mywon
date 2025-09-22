@@ -3,10 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\HeroController;
+use App\Http\Controllers\frontend\FrontEndController;
 
-Route::get('/', function () {
-    return view('/frontend/index');
-});
+Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('/backend/admin/index');
@@ -24,6 +24,17 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+//HeroController
+Route::middleware('auth')->group(function () {
+    Route::controller(HeroController::class)->group(function () {
+        Route::get('/hero', 'index')->name('hero.index');
+        Route::get('/hero/create', 'create')->name('hero.create');
+        Route::post('/hero/store', 'store')->name('hero.store');
+        Route::get('/hero/edit/{id}', 'edit')->name('hero.edit');
+        Route::post('/hero/update/{id}', 'update')->name('hero.update');
+        // Route::delete('/hero/destroy/{id}', 'destroy')->name('hero.destroy');
+    });
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
