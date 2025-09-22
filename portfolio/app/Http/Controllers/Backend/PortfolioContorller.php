@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Portfolio;
+use App\Models\Services;
 
 class PortfolioContorller extends Controller
 {
@@ -17,7 +18,8 @@ class PortfolioContorller extends Controller
 
     public function create()
     {
-        return view('backend.admin.portfolio.create');
+        $services= Services::all();
+        return view('backend.admin.portfolio.create', compact('services'));
     }
 
     public function store(Request $request)
@@ -55,7 +57,8 @@ class PortfolioContorller extends Controller
     public function edit($id)
     {
         $portfolio = Portfolio::findOrFail($id);
-        return view('backend.admin.portfolio.edit', compact('portfolio'));
+        $services= Services::all();
+        return view('backend.admin.portfolio.edit', compact('portfolio', 'services'));
     }
 
     public function update(Request $request, $id)

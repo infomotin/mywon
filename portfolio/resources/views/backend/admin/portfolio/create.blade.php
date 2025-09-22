@@ -46,8 +46,13 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="mb-3">
-                                        <label class="form-label">Services Cat ID</label>
-                                        <input type="text" class="form-control" name="services_cat_id" placeholder="Enter services cat id">
+                                        <label class="form-label">Services Category </label>
+                                        <select name="services_cat_id" id="services_cat_id" class="form-control">
+                                            <option value="">Select Services Category</option>
+                                            @foreach ($services as $service)
+                                                <option value="{{ $service->id }}">{{ $service->service_title }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">

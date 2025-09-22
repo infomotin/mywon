@@ -47,7 +47,12 @@
                                 <div class="col-sm-4">
                                     <div class="mb-3">
                                         <label class="form-label">Services Cat ID</label>
-                                        <input type="text" class="form-control" name="services_cat_id" placeholder="Enter services cat id" value="{{ $portfolio->services_cat_id }}">
+                                        <select name="services_cat_id" id="services_cat_id" class="form-control">
+                                            <option value="">Select Services Category</option>
+                                            @foreach ($services as $service)
+                                                <option value="{{ $service->id }}" {{ $portfolio->services_cat_id == $service->id ? 'selected' : '' }}>{{ $service->service_title }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
