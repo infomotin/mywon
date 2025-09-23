@@ -266,6 +266,7 @@
          <div class="row">
             <div class="col-md-12">
                <div class="skills-widget d-flex flex-wrap justify-content-center align-items-center">
+
                   <div class="skill-item wow fadeInUp" data-wow-delay=".3s">
                      <div class="skill-inner">
                         <div class="icon-box">
@@ -320,6 +321,7 @@
                      </div>
                      <p>JavaScript</p>
                   </div>
+                  
                </div>
             </div>
          </div>

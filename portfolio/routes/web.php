@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\PortfolioContorller;
 use App\Http\Controllers\Backend\PortfolioPopupContorller;
 use App\Http\Controllers\Backend\ResumeContorller;
 use App\Http\Controllers\Backend\EducationContorller;
+use App\Http\Controllers\Backend\MySkillContorller;
 use App\Http\Controllers\frontend\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
@@ -98,6 +99,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/education/edit/{id}', 'edit')->name('education.edit');
         Route::post('/education/update/{id}', 'update')->name('education.update');
         // Route::delete('/education/destroy/{id}', 'destroy')->name('education.destroy');
+    });
+});
+
+// MySkillContorller
+Route::middleware('auth')->group(function () {
+    Route::controller(MySkillContorller::class)->group(function () {
+        Route::get('/myskill', 'index')->name('myskill.index');
+        Route::get('/myskill/create', 'create')->name('myskill.create');
+        Route::post('/myskill/store', 'store')->name('myskill.store');
+        Route::get('/myskill/edit/{id}', 'edit')->name('myskill.edit');
+        Route::post('/myskill/update/{id}', 'update')->name('myskill.update');
+        // Route::delete('/myskill/destroy/{id}', 'destroy')->name('myskill.destroy');
     });
 });
 
