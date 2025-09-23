@@ -40,6 +40,14 @@
                             <a href="{{ route('portfolio.index') }}"
                                 class="nav-link">Portfolio</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('resume.index') }}"
+                                class="nav-link">Resume</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('education.index') }}"
+                                class="nav-link">Education</a>
+                        </li>
                     </ul>
                 </div>
             </li>

@@ -6,6 +6,8 @@
    $portfolios = App\Models\Portfolio::with('services')->latest()->limit(4)->get();
    // dd($portfolios);
    $services = App\Models\Services::all();
+   $resume = App\Models\Resume::all();
+   $education = App\Models\Education::all();
 
    @endphp
    <section class="portfolio-section" id="works-section">
@@ -215,26 +217,14 @@
                </div>
 
                <div class="resume-widget">
-                  <div class="resume-item wow fadeInLeft" data-wow-delay=".4s">
-                     <div class="time">2022 - Present</div>
-                     <h3 class="resume-title">Lead Developer</h3>
-                     <div class="institute">Blockdots, London</div>
-                  </div>
-                  <div class="resume-item wow fadeInLeft" data-wow-delay=".5s">
-                     <div class="time">2021 - 2022</div>
-                     <h3 class="resume-title">Full Stack Web Developer</h3>
-                     <div class="institute">Parsons, The New School</div>
-                  </div>
-                  <div class="resume-item wow fadeInLeft" data-wow-delay=".6s">
-                     <div class="time">2020 - 2021</div>
-                     <h3 class="resume-title">UI Designer</h3>
-                     <div class="institute">House of Life, Leeds</div>
-                  </div>
+                  
+                  @foreach ($resume as $item)
                   <div class="resume-item wow fadeInLeft" data-wow-delay=".7s">
-                     <div class="time">2018 - 2020</div>
-                     <h3 class="resume-title">Junior Graphics Designer</h3>
-                     <div class="institute">Theme Junction, Bursa</div>
+                     <div class="time">{{ Str::substr($item->start_date, 0, 4) }} - {{ ($item->end_date) == null ? 'Present' : Str::substr($item->end_date, 0, 4) }}</div>
+                     <h3 class="resume-title">{{ $item->title }}</h3>
+                     <div class="institute">{{ $item->company }}</div>
                   </div>
+                  @endforeach
                </div>
             </div>
 
@@ -244,26 +234,13 @@
                </div>
 
                <div class="resume-widget">
+                  @foreach ($education as $item)
                   <div class="resume-item wow fadeInRight" data-wow-delay=".5s">
-                     <div class="time">2020 - 2023</div>
-                     <h3 class="resume-title">Programming course</h3>
-                     <div class="institute">Harverd University</div>
+                     <div class="time">{{ Str::substr($item->start_date, 0, 4) }} - {{ ($item->end_date) == null ? 'Present' : Str::substr($item->end_date, 0, 4) }}</div>
+                     <h3 class="resume-title">{{ $item->title }}</h3>
+                     <div class="institute">{{ $item->institution }}</div>
                   </div>
-                  <div class="resume-item wow fadeInRight" data-wow-delay=".6s">
-                     <div class="time">2016 - 2020</div>
-                     <h3 class="resume-title">Graphic design course</h3>
-                     <div class="institute">University of Denmark</div>
-                  </div>
-                  <div class="resume-item wow fadeInRight" data-wow-delay=".7s">
-                     <div class="time">2012 - 2015</div>
-                     <h3 class="resume-title">Web design course</h3>
-                     <div class="institute">University of California</div>
-                  </div>
-                  <div class="resume-item wow fadeInRight" data-wow-delay=".8s">
-                     <div class="time">2010 - 2011</div>
-                     <h3 class="resume-title">Design & Technology</h3>
-                     <div class="institute">Parsons, The New School</div>
-                  </div>
+                  @endforeach                  
                </div>
             </div>
          </div>

@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\PortfolioContorller;
 use App\Http\Controllers\Backend\PortfolioPopupContorller;
+use App\Http\Controllers\Backend\ResumeContorller;
+use App\Http\Controllers\Backend\EducationContorller;
 use App\Http\Controllers\frontend\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
@@ -72,6 +74,30 @@ Route::middleware('auth')->group(function () {
         // Route::get('/portfolio/popup/edit/{id}', 'edit')->name('portfolio.popup.edit');
         // Route::post('/portfolio/popup/update/{id}', 'update')->name('portfolio.popup.update');
         // Route::delete('/portfolio/popup/destroy/{id}', 'destroy')->name('portfolio.popup.destroy');
+    });
+});
+
+//ResumeContorller
+Route::middleware('auth')->group(function () {
+    Route::controller(ResumeContorller::class)->group(function () {
+        Route::get('/resume', 'index')->name('resume.index');
+        Route::get('/resume/create', 'create')->name('resume.create');
+        Route::post('/resume/store', 'store')->name('resume.store');
+        Route::get('/resume/edit/{id}', 'edit')->name('resume.edit');
+        Route::post('/resume/update/{id}', 'update')->name('resume.update');
+        // Route::delete('/resume/destroy/{id}', 'destroy')->name('resume.destroy');
+    });
+});
+
+//EducationContorller
+Route::middleware('auth')->group(function () {
+    Route::controller(EducationContorller::class)->group(function () {
+        Route::get('/education', 'index')->name('education.index');
+        Route::get('/education/create', 'create')->name('education.create');
+        Route::post('/education/store', 'store')->name('education.store');
+        Route::get('/education/edit/{id}', 'edit')->name('education.edit');
+        Route::post('/education/update/{id}', 'update')->name('education.update');
+        // Route::delete('/education/destroy/{id}', 'destroy')->name('education.destroy');
     });
 });
 
