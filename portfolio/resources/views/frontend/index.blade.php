@@ -2,6 +2,12 @@
 
 @section('content')
    <!-- PORTFOLIO SECTION START -->
+   @php 
+   $portfolios = App\Models\Portfolio::with('services')->latest()->limit(4)->get();
+   // dd($portfolios);
+   $services = App\Models\Services::all();
+
+   @endphp
    <section class="portfolio-section" id="works-section">
       <div class="container">
          <div class="row">
@@ -21,9 +27,9 @@
                <div class="portfolio-filter text-center wow fadeInUp" data-wow-delay=".5s">
                   <div class="button-group filter-button-group">
                      <button data-filter="*" class="active">All</button>
-                     <button data-filter=".uxui">UX/UI</button>
-                     <button data-filter=".branding">Branding</button>
-                     <button data-filter=".mobile-app">Apps</button>
+                     @foreach ($services as $service)
+                        <button data-filter=".{{ Str::replace(' ', '-', $service->service_title) }}">{{ $service->service_title }}</button>
+                     @endforeach
                      <div class="active-bg"></div>
                   </div>
                </div>
@@ -31,50 +37,26 @@
                <div class="portfolio-box wow fadeInUp" data-wow-delay=".6s">
                   <div class="portfolio-sizer"></div>
                   <div class="gutter-sizer"></div>
-                  <div class="portfolio-item branding">
+
+                  @foreach ($portfolios as $portfolio)
+                  
+                  
+                  <div class="portfolio-item {{ Str::replace(' ', '-', $portfolio->services->service_title) }}">
                      <div class="image-box">
-                        <img src="{{ asset('/Fontend/assets/img/portfolio/2.jpg') }}" alt="" />
+                        <img src="{{ asset('upload/portfolio/'.$portfolio->image) }}" alt="" />
                      </div>
-                     <div class="content-box">
-                        <h3 class="portfolio-title">Deloitte</h3>
-                        <p>Project was about precision and information.</p>
+                     <a href="{{ $portfolio->url }}" style="color:#fff" target="_blank">
+                        <div class="content-box">
+                        <h3 class="portfolio-title">{{ $portfolio->title }}</h3>
+                        <p>{{ $portfolio->subtitle }}</p>
                         <i class="flaticon-up-right-arrow"></i>
-                        <button data-mfp-src="#portfolio-wrapper" class="portfolio-link modal-popup"></button>
+                        {{-- <button data-mfp-src="#portfolio-wrapper" class="portfolio-link modal-popup"></button> --}}
                      </div>
+                     </a>
                   </div>
-                  <div class="portfolio-item uxui">
-                     <div class="image-box">
-                        <img src="{{ asset('/Fontend/assets/img/portfolio/1.jpg') }}" alt="" />
-                     </div>
-                     <div class="content-box">
-                        <h3 class="portfolio-title">New Age</h3>
-                        <p>Project was about precision and information.</p>
-                        <i class="flaticon-up-right-arrow"></i>
-                        <button data-mfp-src="#portfolio-wrapper" class="portfolio-link modal-popup"></button>
-                     </div>
-                  </div>
-                  <div class="portfolio-item mobile-app">
-                     <div class="image-box">
-                        <img src="{{ asset('/Fontend/assets/img/portfolio/3.jpg') }}" alt="" />
-                     </div>
-                     <div class="content-box">
-                        <h3 class="portfolio-title">Sebastian</h3>
-                        <p>Project was about precision and information.</p>
-                        <i class="flaticon-up-right-arrow"></i>
-                        <button data-mfp-src="#portfolio-wrapper" class="portfolio-link modal-popup"></button>
-                     </div>
-                  </div>
-                  <div class="portfolio-item branding">
-                     <div class="image-box">
-                        <img src="{{ asset('/Fontend/assets/img/portfolio/4.jpg') }}" alt="" />
-                     </div>
-                     <div class="content-box">
-                        <h3 class="portfolio-title">Mochnix</h3>
-                        <p>Project was about precision and information.</p>
-                        <i class="flaticon-up-right-arrow"></i>
-                        <button data-mfp-src="#portfolio-wrapper" class="portfolio-link modal-popup"></button>
-                     </div>
-                  </div>
+                  @endforeach
+
+                  
                </div>
             </div>
          </div>

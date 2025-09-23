@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\HeroController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\PortfolioContorller;
+use App\Http\Controllers\Backend\PortfolioPopupContorller;
 use App\Http\Controllers\frontend\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
@@ -60,6 +61,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/portfolio/edit/{id}', 'edit')->name('portfolio.edit');
         Route::post('/portfolio/update/{id}', 'update')->name('portfolio.update');
         // Route::delete('/portfolio/destroy/{id}', 'destroy')->name('portfolio.destroy');
+    });
+});
+//PortfolioPopupContorller
+Route::middleware('auth')->group(function () {
+    Route::controller(PortfolioPopupContorller::class)->group(function () {
+        // Route::get('/portfolio/popup', 'index')->name('portfolio.popup.index');
+        // Route::get('/portfolio/popup/create', 'create')->name('portfolio.popup.create');
+        // Route::post('/portfolio/popup/store', 'store')->name('portfolio.popup.store');
+        // Route::get('/portfolio/popup/edit/{id}', 'edit')->name('portfolio.popup.edit');
+        // Route::post('/portfolio/popup/update/{id}', 'update')->name('portfolio.popup.update');
+        // Route::delete('/portfolio/popup/destroy/{id}', 'destroy')->name('portfolio.popup.destroy');
     });
 });
 
