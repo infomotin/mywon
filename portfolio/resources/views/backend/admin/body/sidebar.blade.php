@@ -52,6 +52,14 @@
                             <a href="{{ route('myskill.index') }}"
                                 class="nav-link">My Skill</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('testimonial.index') }}"
+                                class="nav-link">Testimonial</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('post.index') }}"
+                                class="nav-link">Post</a>
+                        </li>
                     </ul>
                 </div>
             </li>

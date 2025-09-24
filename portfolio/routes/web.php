@@ -10,7 +10,9 @@ use App\Http\Controllers\Backend\PortfolioPopupContorller;
 use App\Http\Controllers\Backend\ResumeContorller;
 use App\Http\Controllers\Backend\EducationContorller;
 use App\Http\Controllers\Backend\MySkillContorller;
+use App\Http\Controllers\Backend\TestimonialContorller;
 use App\Http\Controllers\frontend\FrontEndController;
+use App\Http\Controllers\PostController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
@@ -111,6 +113,30 @@ Route::middleware('auth')->group(function () {
         Route::get('/myskill/edit/{id}', 'edit')->name('myskill.edit');
         Route::post('/myskill/update/{id}', 'update')->name('myskill.update');
         // Route::delete('/myskill/destroy/{id}', 'destroy')->name('myskill.destroy');
+    });
+});
+
+// TestimonialContorller
+Route::middleware('auth')->group(function () {
+    Route::controller(TestimonialContorller::class)->group(function () {
+        Route::get('/testimonial', 'index')->name('testimonial.index');
+        Route::get('/testimonial/create', 'create')->name('testimonial.create');
+        Route::post('/testimonial/store', 'store')->name('testimonial.store');
+        Route::get('/testimonial/edit/{id}', 'edit')->name('testimonial.edit');
+        Route::post('/testimonial/update/{id}', 'update')->name('testimonial.update');
+        // Route::delete('/testimonial/destroy/{id}', 'destroy')->name('testimonial.destroy');
+    });
+});
+
+//PostController
+Route::middleware('auth')->group(function () {
+    Route::controller(PostController::class)->group(function () {
+        Route::get('/post', 'index')->name('post.index');
+        Route::get('/post/create', 'create')->name('post.create');
+        Route::post('/post/store', 'store')->name('post.store');
+        Route::get('/post/edit/{id}', 'edit')->name('post.edit');
+        Route::post('/post/update/{id}', 'update')->name('post.update');
+        // Route::delete('/post/destroy/{id}', 'destroy')->name('post.destroy');
     });
 });
 
