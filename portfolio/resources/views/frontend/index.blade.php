@@ -8,6 +8,7 @@
    $services = App\Models\Services::all();
    $resume = App\Models\Resume::all();
    $education = App\Models\Education::all();
+   $myskills = App\Models\MySkills::all();
 
    @endphp
    <section class="portfolio-section" id="works-section">
@@ -266,62 +267,18 @@
          <div class="row">
             <div class="col-md-12">
                <div class="skills-widget d-flex flex-wrap justify-content-center align-items-center">
-
+                  @foreach ($myskills as $item)
                   <div class="skill-item wow fadeInUp" data-wow-delay=".3s">
                      <div class="skill-inner">
                         <div class="icon-box">
-                           <img src="{{ asset('/Fontend/assets/img/icons/figma.svg') }}" alt="" />
+                           <img src="{{ asset('uploads/icon/' . $item->icon) }}" alt="" />
                         </div>
-                        <div class="number">92%</div>
+                        <div class="number">{{ $item->level }}%</div>
                      </div>
-                     <p>Figma</p>
+                     <p>{{ $item->name }}</p>
                   </div>
-                  <div class="skill-item wow fadeInUp" data-wow-delay=".4s">
-                     <div class="skill-inner">
-                        <div class="icon-box">
-                           <img src="{{ asset('/Fontend/assets/img/icons/sketch.svg') }}" alt="" />
-                        </div>
-                        <div class="number">80%</div>
-                     </div>
-                     <p>Sketch</p>
-                  </div>
-                  <div class="skill-item wow fadeInUp" data-wow-delay=".5s">
-                     <div class="skill-inner">
-                        <div class="icon-box">
-                           <img src="{{ asset('/Fontend/assets/img/icons/xd.svg') }}" alt="" />
-                        </div>
-                        <div class="number">85%</div>
-                     </div>
-                     <p>XD</p>
-                  </div>
-                  <div class="skill-item wow fadeInUp" data-wow-delay=".6s">
-                     <div class="skill-inner">
-                        <div class="icon-box">
-                           <img src="{{ asset('/Fontend/assets/img/icons/wp.svg') }}" alt="" />
-                        </div>
-                        <div class="number">99%</div>
-                     </div>
-                     <p>WordPess</p>
-                  </div>
-                  <div class="skill-item wow fadeInUp" data-wow-delay=".7s">
-                     <div class="skill-inner">
-                        <div class="icon-box">
-                           <img src="{{ asset('/Fontend/assets/img/icons/react.svg') }}" alt="" />
-                        </div>
-                        <div class="number">89%</div>
-                     </div>
-                     <p>React</p>
-                  </div>
-                  <div class="skill-item wow fadeInUp" data-wow-delay=".8s">
-                     <div class="skill-inner">
-                        <div class="icon-box">
-                           <img src="{{ asset('/Fontend/assets/img/icons/js.svg') }}" alt="" />
-                        </div>
-                        <div class="number">93%</div>
-                     </div>
-                     <p>JavaScript</p>
-                  </div>
-                  
+                  @endforeach
+
                </div>
             </div>
          </div>

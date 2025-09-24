@@ -48,6 +48,10 @@
                             <a href="{{ route('education.index') }}"
                                 class="nav-link">Education</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('myskill.index') }}"
+                                class="nav-link">My Skill</a>
+                        </li>
                     </ul>
                 </div>
             </li>

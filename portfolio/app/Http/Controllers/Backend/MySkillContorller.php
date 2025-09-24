@@ -25,7 +25,19 @@ class MySkillContorller extends Controller
             'level' => 'required',
             'order' => 'required',
         ]);
-        MySkills::create($request->all());
+        if($request->hasFile('icon'))
+        {
+            $file = $request->file('icon');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('uploads/icon/', $filename);
+            $myskill = MySkills::create([
+                'name' => $request->name,
+                'icon' => $filename,
+                'level' => $request->level,
+                'order' => $request->order,
+            ]);
+        }
         return redirect()->route('myskill.index')->with('success', 'MySkill created successfully');
     }
     public function edit($id)
@@ -36,7 +48,18 @@ class MySkillContorller extends Controller
     public function update(Request $request, $id)
     {
         $myskill = MySkills::findOrFail($id);
-        $myskill->update($request->all());
+        if($request->hasFile('icon'))
+        {
+            $file = $request->file('icon');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('uploads/icon/', $filename);
+            $myskill->icon = $filename;
+        }
+        $myskill->name = $request->name;
+        $myskill->level = $request->level;
+        $myskill->order = $request->order;
+        $myskill->save();
         return redirect()->route('myskill.index')->with('success', 'MySkill updated successfully');
     }
     public function destroy($id)
