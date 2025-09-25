@@ -1,3 +1,6 @@
+@php
+   $blogs = \App\Models\Blog::with(['category', 'tags'])->latest()->paginate(3);
+@endphp
 <section class="blog-section" id="blog-section">
     <div class="container">
        <div class="row">
@@ -12,64 +15,28 @@
           </div>
        </div>
        <div class="row">
+         @foreach ($blogs as $blog)
           <div class="col-lg-4 col-md-6">
              <div class="blog-item wow fadeInUp" data-wow-delay=".5s">
                 <div class="blog-thumb">
-                   <a href="blog-details.html">
-                      <img src="{{ asset('/Fontend/assets/img/blog/1.jpg') }}" alt="" />
+                   <a href="#">
+                      <img src="{{ asset('upload/posts/' . $blog->thumbnail) }}" alt="" />
                    </a>
-                   <a href="#" class="category">Tutorial</a>
+                   <a href="#" class="category">{{ $blog->category->name ?? '-' }}</a>
                 </div>
 
                 <div class="blog-content">
                    <div class="blog-meta">
                       <ul class="ul-reset">
-                         <li><i class="fa-light fa-calendar-days"></i> Oct 01, 2022</li>
+                         <li><i class="fa-light fa-calendar-days"></i> {{ $blog->created_at->format('d M, Y') }}</li>
                          <li><i class="fa-light fa-comments"></i> <a href="#">Comment (0)</a></li>
                       </ul>
                    </div>
-                   <h3 class="blog-title"><a href="blog-details.html">top 10 ui ux designers</a></h3>
+                   <h3 class="blog-title"><a href="#">{{ $blog->title }}</a></h3>
                 </div>
              </div>
           </div>
-          <div class="col-lg-4 col-md-6">
-             <div class="blog-item wow fadeInUp" data-wow-delay=".6s">
-                <div class="blog-thumb">
-                   <a href="blog-details.html">
-                      <img src="{{ asset('/Fontend/assets/img/blog/2.jpg') }}" alt="" />
-                   </a>
-                   <a href="#" class="category">TIPS</a>
-                </div>
-                <div class="blog-content">
-                   <div class="blog-meta">
-                      <ul class="ul-reset">
-                         <li><i class="fa-light fa-calendar-days"></i> Nov 01, 2022</li>
-                         <li><i class="fa-light fa-comments"></i> <a href="#">Comment (0)</a></li>
-                      </ul>
-                   </div>
-                   <h3 class="blog-title"><a href="blog-details.html">App Development Guides</a></h3>
-                </div>
-             </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-             <div class="blog-item wow fadeInUp" data-wow-delay=".7s">
-                <div class="blog-thumb">
-                   <a href="blog-details.html">
-                      <img src="{{ asset('/Fontend/assets/img/blog/3.jpg') }}" alt="" />
-                   </a>
-                   <a href="#" class="category">FREEBIES</a>
-                </div>
-                <div class="blog-content">
-                   <div class="blog-meta">
-                      <ul class="ul-reset">
-                         <li><i class="fa-light fa-calendar-days"></i> Dec 01, 2022</li>
-                         <li><i class="fa-light fa-comments"></i> <a href="#">Comment (0)</a></li>
-                      </ul>
-                   </div>
-                   <h3 class="blog-title"><a href="blog-details.html">learn graphic design free</a></h3>
-                </div>
-             </div>
-          </div>
+         @endforeach          
        </div>
     </div>
  </section>

@@ -22,23 +22,25 @@ class HeroController extends Controller
     //hero.store
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'title' => 'required',
-            'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'facebook' => 'required',
-            'twitter' => 'required',
-            'instagram' => 'required',
-            'linkedin' => 'required',
-            'YOE' => 'required',
-            'CV' => 'required|file|mimes:pdf|max:2048',
-            'HC' => 'required|file|mimes:pdf|max:2048',
-            'Location' => 'required',
-            'github' => 'required',
-            'problem_statement' => 'required',
-            'problem_statement_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        // dd($request->all());
+        // $request->validate([
+        //     'name' => 'required',
+        //     'title' => 'required',
+        //     'description' => 'required',
+        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'facebook' => 'required',
+        //     'twitter' => 'required',
+        //     'instagram' => 'required',
+        //     'linkedin' => 'required',
+        //     'YOE' => 'required',
+        //     'CV' => 'required|file|mimes:pdf|max:2048',
+        //     'HC' => 'required|file|mimes:pdf|max:2048',
+        //     'Location' => 'required',
+        //     'github' => 'required',
+        //     'problem_statement' => 'required',
+        //     'problem_statement_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
+        //store
         $hero = new Hero();
         $hero->name = $request->name;
         $hero->title = $request->title;

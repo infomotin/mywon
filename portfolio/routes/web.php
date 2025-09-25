@@ -13,8 +13,10 @@ use App\Http\Controllers\Backend\MySkillContorller;
 use App\Http\Controllers\Backend\TestimonialContorller;
 use App\Http\Controllers\frontend\FrontEndController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
+Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::get('/dashboard', function () {
     return view('/backend/admin/index');
@@ -139,7 +141,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/blog/destroy/{id}', 'destroy')->name('blog.destroy');
     });
 });
-
+//ContactController
+Route::middleware('auth')->group(function () {
+    Route::controller(ContactController::class)->group(function () {
+        Route::get('/contact', 'index')->name('contact.index');
+        Route::post('/contact/reply/{id}', 'reply')->name('contact.reply');
+    });
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
