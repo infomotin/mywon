@@ -56,9 +56,10 @@
                             <a href="{{ route('testimonial.index') }}"
                                 class="nav-link">Testimonial</a>
                         </li>
+                      
                         <li class="nav-item">
-                            <a href="{{ route('post.index') }}"
-                                class="nav-link">Post</a>
+                            <a href="{{ route('blog.index') }}"
+                                class="nav-link">Blog</a>
                         </li>
                     </ul>
                 </div>

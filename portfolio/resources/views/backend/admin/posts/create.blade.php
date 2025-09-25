@@ -21,7 +21,7 @@
                 // Author --}}
                 <div class="card-body">
                     <h6 class="card-title">Post Add Form</h6>
-                        <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
@@ -44,8 +44,7 @@
                                 <div class="col-sm-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tags</label>
-                                        <select name="tags[]" class="form-control" multiple>
-                                            <option value="" selected>Select Tags</option>
+                                        <select name="tags[]" class="form-control select2" multiple>
                                             @foreach ($tags as $tag)
                                                 <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                             @endforeach
@@ -65,11 +64,11 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Image</label>
-                                        <input type="file" class="form-control" name="image" placeholder="Enter image" onchange="previewImage(event)">
+                                        <label class="form-label">Thumbnail</label>
+                                        <input type="file" class="form-control" name="thumbnail" placeholder="Enter thumbnail" onchange="previewImage(event)">
                                     </div>
                                     <div class="mb-3">
-                                        <img src="{{ asset('uploads/posts') }}" alt="Icon" width="100" id="preview">
+                                        <img src="{{ asset('upload/posts') }}" alt="Icon" width="100" id="preview">
                                     </div>
                                 </div><!-- Col -->
                             </div><!-- Row -->

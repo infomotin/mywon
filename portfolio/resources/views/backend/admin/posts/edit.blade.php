@@ -4,65 +4,86 @@
     <div class="page-content">
         <section class="section">
             <div class="card">
-                {{-- 
-                $table->string('name');              // Skill name e.g. Figma, React
-                $table->string('icon')->nullable();  // Path to icon file
-                $table->unsignedTinyInteger('level')->default(0); // Percentage 0-100
-                $table->integer('order')->default(0); // For ordering in frontend 
-                --}}
                 <div class="card-body">
-                    <h6 class="card-title">Resume Section Edit Form</h6>
-                    <form action="{{ route('myskill.update', $myskill->id) }}" method="POST" enctype="multipart/form-data">
+                    <h6 class="card-title">Edit Blog</h6>
+                    <form action="{{ route('blog.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" name="name"
-                                        placeholder="Enter name" value="{{ $myskill->name }}">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Icon</label>
-                                    <input type="file" class="form-control" name="icon" placeholder="Enter icon" onchange="previewImage(event)">
-                                    <img src="{{ asset('upload/icon' . $myskill->icon) }}" alt="Icon" width="100" id="preview">
-                                </div>
-                            </div><!-- Col -->
-                        </div><!-- Row -->
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Level</label>
-                                    <input type="number" class="form-control" name="level"
-                                        placeholder="Enter level" value="{{ $myskill->level }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Order</label>
-                                    <input type="number" class="form-control" name="order"
-                                        placeholder="Enter order" value="{{ $myskill->order }}">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control" name="title" value="{{ $blog->title }}">
                                 </div>
                             </div>
-                            <!-- Col -->
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Slug</label>
+                                    <input type="text" class="form-control" name="slug" value="{{ $blog->slug }}">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
 
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-control" name="category_id">
+                                        <option value="">-- Select Category --</option>
+                                        @foreach ($categories as $cat)
+                                            <option value="{{ $cat->id }}" {{ $blog->category_id == $cat->id ? 'selected' : '' }}>
+                                                {{ $cat->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tags</label>
+                                    <select class="form-control" name="tags[]" multiple>
+                                        @foreach ($tags as $tag)
+                                            <option value="{{ $tag->id }}" {{ $blog->tags->contains($tag->id) ? 'selected' : '' }}>
+                                                {{ $tag->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" name="content" rows="5">{{ $blog->content }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Thumbnail</label>
+                            <input type="file" class="form-control" name="thumbnail" onchange="previewImage(event)">
+                            <div class="mt-2">
+                                @if ($blog->thumbnail)
+                                    <img src="{{ asset('upload/posts/' . $blog->thumbnail) }}" width="120" id="preview">
+                                @else
+                                    <img src="" id="preview" width="120" style="display:none;">
+                                @endif
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a href="{{ route('blog.index') }}" class="btn btn-secondary">Back</a>
+                    </form>
                 </div>
             </div>
-
         </section>
     </div>
+
     <script>
         function previewImage(event) {
-            var reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = function() {
-                var output = document.getElementById('preview');
+                let output = document.getElementById('preview');
                 output.src = reader.result;
+                output.style.display = "block";
             }
             reader.readAsDataURL(event.target.files[0]);
         }

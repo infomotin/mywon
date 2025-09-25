@@ -5,49 +5,53 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Post</h4>
-                    <a href="{{ route('post.create') }}" class="btn btn-primary float-end">Create</a>
+                    <h4 class="card-title">Blog List</h4>
+                    <a href="{{ route('blog.create') }}" class="btn btn-primary float-end">Create</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" id="table1">
-                            {{-- $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-                            $table->string('title');
-                            $table->string('slug')->unique();
-                            $table->text('excerpt')->nullable();
-                            $table->longText('content');
-                            $table->string('image')->nullable();
-                            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Author --}}
                             <thead>
                                 <tr>
-                                    <th>Category</th>
                                     <th>Title</th>
-                                    <th>Slug</th>
-                                    <th>Excerpt</th>
-                                    <th>Content</th>
-                                    <th>Image</th>
+                                    <th>Thumbnail</th>
+                                    <th>Category</th>
+                                    <th>Tags</th>
                                     <th>Author</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($posts as $item)
+                                @foreach ($blogs as $item)
                                     <tr>
-                                        <td>{{ $item->category->name }}</td>
                                         <td>{{ $item->title }}</td>
-                                        <td>{{ $item->slug }}</td>
-                                        <td>{{ $item->excerpt }}</td>
-                                        <td>{{ $item->content }}</td>
-                                        <td><img src="{{ asset('uploads/posts/' . $item->image) }}" alt="Image" width="50"></td>
-                                        <td>{{ $item->user->name }}</td>
                                         <td>
-                                            <a href="{{ route('post.edit', $item->id) }}" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
+                                            @if ($item->thumbnail)
+                                                <img src="{{ asset('upload/posts/' . $item->thumbnail) }}" alt="Thumbnail" width="80">
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->category->name ?? '-' }}</td>
+                                        <td>
+                                            @foreach ($item->tags as $tag)
+                                                <span class="badge bg-info">{{ $tag->name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $item->user->name ?? 'Admin' }}</td>
+                                        <td>
+                                            <a href="{{ route('blog.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                                            <form action="{{ route('blog.destroy', $item->id) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            {{ $blogs->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

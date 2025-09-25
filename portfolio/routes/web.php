@@ -12,7 +12,7 @@ use App\Http\Controllers\Backend\EducationContorller;
 use App\Http\Controllers\Backend\MySkillContorller;
 use App\Http\Controllers\Backend\TestimonialContorller;
 use App\Http\Controllers\frontend\FrontEndController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\BlogController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
@@ -128,15 +128,15 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-//PostController
+//BlogController
 Route::middleware('auth')->group(function () {
-    Route::controller(PostController::class)->group(function () {
-        Route::get('/post', 'index')->name('post.index');
-        Route::get('/post/create', 'create')->name('post.create');
-        Route::post('/post/store', 'store')->name('post.store');
-        Route::get('/post/edit/{id}', 'edit')->name('post.edit');
-        Route::post('/post/update/{id}', 'update')->name('post.update');
-        // Route::delete('/post/destroy/{id}', 'destroy')->name('post.destroy');
+    Route::controller(BlogController::class)->group(function () {
+        Route::get('/blog', 'index')->name('blog.index');
+        Route::get('/blog/create', 'create')->name('blog.create');
+        Route::post('/blog/store', 'store')->name('blog.store');
+        Route::get('/blog/edit/{id}', 'edit')->name('blog.edit');
+        Route::post('/blog/update/{id}', 'update')->name('blog.update');
+        Route::delete('/blog/destroy/{id}', 'destroy')->name('blog.destroy');
     });
 });
 
