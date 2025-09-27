@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Services;
 use App\Mail\ContactReply;
+use App\Mail\MailRecved;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -25,19 +27,27 @@ class ContactController extends Controller
             'phone' => 'required',
             'message' => 'required',
         ]);
-        Contact::create($request->all());
+        $contact = Contact::create($request->all());
+        //Send Email to user
+        Mail::to($contact->email)->send(new MailRecved($contact));
         return redirect()->route('home')->with('success', 'Message sent successfully');
     }
     public function reply(Request $request, $id)
     {
-        dd($request->all());
         $contact = Contact::findOrFail($id);
-        $request->validate([
+        $reply = $request->validate([
             'subject' => 'required',
             'message' => 'required',
         ]);
+        $reply['contact_id'] = $contact->id;
+        $reply['first_name'] = $contact->first_name;
+        $reply['last_name'] = $contact->last_name;
+        $reply['email'] = $contact->email;
+        $reply['phone'] = $contact->phone;
+        $reply['user_id'] = Auth::user()->name;
+        $reply['status'] = 'Replied';
         //Send Email to user
-        Mail::to($contact->email)->send(new ContactReply($request->all()));
+        Mail::to($contact->email)->send(new ContactReply($reply));
         return redirect()->route('contact.index')->with('success', 'Message replied successfully');
     }
 }
