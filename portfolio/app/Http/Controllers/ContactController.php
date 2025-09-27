@@ -9,7 +9,7 @@ use App\Mail\ContactReply;
 use App\Mail\MailRecved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-
+use App\Services\SendSMSservice;    
 class ContactController extends Controller
 {
     public function index()
@@ -30,6 +30,10 @@ class ContactController extends Controller
         $contact = Contact::create($request->all());
         //Send Email to user
         Mail::to($contact->email)->send(new MailRecved($contact));
+        //Send SMS to user
+        $sms = new SendSMSservice();
+        $message = 'Thank you for your message. We will get back to you soon.';
+        $sms->send($contact->phone, $message);
         return redirect()->route('home')->with('success', 'Message sent successfully');
     }
     public function reply(Request $request, $id)
