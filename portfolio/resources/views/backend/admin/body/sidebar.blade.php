@@ -75,6 +75,12 @@
             </li>
             <li class="nav-item nav-category">Setting</li>
             <li class="nav-item">
+                <a href="{{ route('theme.index') }}" class="nav-link">
+                    <i class="link-icon" data-feather="layout"></i>
+                    <span class="link-title">Theme Customizer</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('setting.index') }}" class="nav-link">
                     <i class="link-icon" data-feather="settings"></i>
                     <span class="link-title">Website Setting</span>

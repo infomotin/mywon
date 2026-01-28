@@ -26,8 +26,28 @@
    <link rel="stylesheet" href="{{ asset('Fontend/assets/css/odometer-theme-default.css') }}" />
    <link rel="stylesheet" href="{{ asset('Fontend/assets/css/magnific-popup.css') }}" />
    <link rel="stylesheet" href="{{ asset('Fontend/assets/css/main.css') }}" />
+   @if(($themeSetting->theme_mode ?? 'dark') == 'light')
    <link rel="stylesheet" href="{{ asset('Fontend/assets/css/light-mode.css') }}" />
+   @endif
    <link rel="stylesheet" href="{{ asset('Fontend/assets/css/responsive.css') }}" />
+   
+   <style>
+      :root {
+         --tj-color-theme-primary: {{ $themeSetting->primary_color ?? '#8750f7' }} !important;
+         --tj-color-theme-secondary: {{ $themeSetting->secondary_color ?? '#2a1454' }} !important;
+         --tj-color-common-white: {{ $themeSetting->text_color ?? '#ffffff' }} !important;
+         --tj-color-body: {{ $themeSetting->background_color ?? '#0f0715' }} !important;
+      }
+      
+      /* Apply background and text color if not handled by variables */
+      body {
+         background-color: {{ $themeSetting->background_color ?? '#0f0715' }} !important;
+         color: {{ $themeSetting->text_color ?? '#ffffff' }} !important;
+      }
+
+      /* Custom CSS */
+      {!! $themeSetting->custom_css ?? '' !!}
+   </style>
 </head>
 
 <body>
@@ -45,11 +65,15 @@
 
    <main class="site-content" id="content">
       <!-- HERO SECTION START -->
+      @if($themeSetting->show_hero ?? true)
       @include('frontend.body.components.hero')
+      @endif
       <!-- HERO SECTION END -->
 
       <!-- SERVICES SECTION START -->
+      @if($themeSetting->show_services ?? true)
       @include('frontend.body.components.services')
+      @endif
       <!-- SERVICES SECTION END -->
 
       <!-- start: Service Popup -->
@@ -59,15 +83,21 @@
       @yield('content')
 
       <!-- TESTIMONIAL SECTION START -->
+      @if($themeSetting->show_testimonial ?? true)
       @include('frontend.body.components.testimonial')
+      @endif
       <!-- TESTIMONIAL SECTION END -->
 
       <!-- BLOG SECTION STAR -->
+      @if($themeSetting->show_blog ?? true)
       @include('frontend.body.components.blog')
+      @endif
       <!-- BLOG SECTION END -->
 
       <!-- CONTACT SECTION START -->
+      @if($themeSetting->show_contact ?? true)
       @include('frontend.body.components.contact')
+      @endif
       <!-- CONTACT SECTION END -->
 
       <!-- BEGIN: Contact Form Success Modal Message -->
@@ -80,7 +110,9 @@
    </main>
 
    <!-- FOOTER AREA START -->
+   @if($themeSetting->show_footer ?? true)
    @include('frontend.body.components.footer')
+   @endif
    <!-- FOOTER AREA END -->
 
    <!-- Live Chat Integration -->

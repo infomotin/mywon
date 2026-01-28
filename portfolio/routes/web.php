@@ -18,6 +18,7 @@ use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SmtpSettingController;
 use App\Http\Controllers\Backend\LiveChatSettingController;
+use App\Http\Controllers\Backend\ThemeSettingController;
 use App\Http\Controllers\Frontend\ChatController;
 use App\Http\Controllers\Backend\ChatController as BackendChatController;
 use App\Http\Controllers\Frontend\PortfolioController as FrontendPortfolioController;
@@ -180,6 +181,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/contact', 'index')->name('contact.index');
         Route::get('/contact/delete/{id}', 'destroy')->name('contact.delete');
         Route::post('/contact/reply/{id}', 'reply')->name('contact.reply');
+    });
+});
+
+//ThemeSettingController
+Route::middleware('auth')->group(function () {
+    Route::controller(ThemeSettingController::class)->group(function () {
+        Route::get('/theme/setting', 'index')->name('theme.index');
+        Route::post('/theme/update', 'update')->name('theme.update');
     });
 });
 

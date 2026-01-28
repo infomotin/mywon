@@ -11,6 +11,7 @@
    $myskills = App\Models\MySkills::all();
 
    @endphp
+   @if($themeSetting->show_portfolio ?? true)
    <section class="portfolio-section" id="works-section">
       <div class="container">
          <div class="row">
@@ -65,6 +66,7 @@
          </div>
       </div>
    </section>
+   @endif
    <!-- PORTFOLIO SECTION END -->
 
    <!-- start: Portfolio Popup -->
@@ -209,6 +211,7 @@
    <!-- end: Portfolio Popup -->
 
    <!-- RESUME SECTION START -->
+   @if($themeSetting->show_resume ?? true)
    <section class="resume-section" id="resume-section">
       <div class="container">
          <div class="row">
@@ -247,9 +250,11 @@
          </div>
       </div>
    </section>
+   @endif
    <!-- RESUME SECTION END -->
 
    <!-- SKILLS SECTION START -->
+   @if($themeSetting->show_skills ?? true)
    <section class="skills-section" id="skills-section">
       <div class="container">
          <div class="row">
@@ -284,5 +289,6 @@
          </div>
       </div>
    </section>
+   @endif
    <!-- SKILLS SECTION END -->
 @endsection
