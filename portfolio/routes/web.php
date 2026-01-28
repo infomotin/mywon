@@ -21,9 +21,11 @@ use App\Http\Controllers\Backend\LiveChatSettingController;
 use App\Http\Controllers\Frontend\ChatController;
 use App\Http\Controllers\Backend\ChatController as BackendChatController;
 use App\Http\Controllers\Frontend\PortfolioController as FrontendPortfolioController;
+use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::get('/portfolio/{id}', [FrontendPortfolioController::class, 'details'])->name('portfolio.details');
+Route::get('/blog/details/{id}', [FrontendBlogController::class, 'details'])->name('blog.details');
 
 // Frontend Chat Routes
 Route::post('/chat/register', [ChatController::class, 'RegisterGuest']);
