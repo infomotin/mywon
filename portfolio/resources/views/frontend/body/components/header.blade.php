@@ -3,8 +3,8 @@
        <div class="row">
           <div class="col-12 d-flex flex-wrap align-items-center">
              <div class="logo-box">
-                <a href="index.html">
-                   <img src="{{ asset('/Fontend/assets/img/logo/logo.png') }}" alt="" />
+                <a href="{{ route('home') }}">
+                   <img src="{{ !empty($setting->logo) ? url('upload/setting/'.$setting->logo) : asset('/Fontend/assets/img/logo/logo.png') }}" alt="{{ $setting->website_name ?? 'Logo' }}" />
                 </a>
              </div>
 
@@ -45,8 +45,8 @@
        <div class="row">
           <div class="col-12 d-flex flex-wrap align-items-center">
              <div class="logo-box">
-                <a href="index.html">
-                   <img src="{{ asset('/Fontend/assets/img/logo/logo.png') }}" alt="" />
+                <a href="{{ route('home') }}">
+                   <img src="{{ !empty($setting->logo) ? url('upload/setting/'.$setting->logo) : asset('/Fontend/assets/img/logo/logo.png') }}" alt="{{ $setting->website_name ?? 'Logo' }}" />
                 </a>
              </div>
 

@@ -167,4 +167,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use App\Http\Controllers\Backend\SettingController;
+
+Route::middleware('auth')->group(function () {
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/setting', 'index')->name('setting.index');
+        Route::post('/setting/update', 'update')->name('setting.update');
+    });
+});
+
 require __DIR__.'/auth.php';

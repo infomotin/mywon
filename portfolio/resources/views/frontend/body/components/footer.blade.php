@@ -3,7 +3,7 @@
        <div class="row">
           <div class="col-md-12 text-center">
              <div class="footer-logo-box">
-                <a href="#"><img src="{{ asset('/Fontend/assets/img/logo/logo.png') }}" alt="" /></a>
+                <a href="{{ route('home') }}"><img src="{{ !empty($setting->logo) ? url('upload/setting/'.$setting->logo) : asset('/Fontend/assets/img/logo/logo.png') }}" alt="{{ $setting->website_name ?? 'Logo' }}" /></a>
              </div>
              <div class="footer-menu">
                 <nav>
@@ -18,7 +18,7 @@
                 </nav>
              </div>
              <div class="copy-text">
-                <p>&copy; {{ date('Y') }} All rights reserved by <a href="#" target="_blank">Mjnamadi</a></p>
+                <p>&copy; {{ date('Y') }} All rights reserved by <a href="#" target="_blank">{{ $setting->website_name ?? 'Mjnamadi' }}</a></p>
              </div>
           </div>
        </div>
