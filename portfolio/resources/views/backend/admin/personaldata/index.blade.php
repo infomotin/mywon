@@ -11,7 +11,7 @@
             @foreach($messages as $message)
                 <div class="{{ $message->user_id == auth()->user()->id ? 'message-current' : 'message-other' }}">
                     <div class="message-avatar">
-                        <img src="{{ $message->user->profile_photo_url }}" alt="{{ $message->user->name }}">
+                        <img src="{{ ($message->user->profile_photo_path) ? asset('upload/admin_images/' . $message->user->profile_photo_path) : asset('backend/assets/images/faces/1.jpg') }}" alt="{{ $message->user->name }}">
                     </div>
                     <div class="message-content">
                         <div class="message-header">

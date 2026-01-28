@@ -22595,4 +22595,12 @@ div.tox .tox-dialog__body {
   margin: 0;
   width: 100%;
 }
+
+/* Custom Footer Fix to prevent overlap and transparency issues */
+.footer {
+    background: #0c1427;
+    border-top: 1px solid #172340;
+    position: relative;
+    z-index: 10;
+}
 /*# sourceMappingURL=../maps/demo2/style.css.map */
