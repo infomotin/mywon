@@ -169,6 +169,24 @@ php artisan queue:work
 
 ---
 
-## ৬. ভবিষ্যৎ পরিকল্পনা (To-Do)
+## ৬. বাগ ফিক্স এবং মেইনটেনেন্স লগ (Bug Fixes & Maintenance)
+
+### ২০২৬-০১-২৮: কিউ ম্যানেজমেন্ট এরর ফিক্স
+*   **Event/Prompt**: `/queue` পেজ লোড করার সময় `Illuminate\Database\QueryException` এবং `Unknown column 'created_at'` এরর দেখাচ্ছিল।
+*   **Plan**: ডাটাবেস স্কিমা চেক করে দেখা গেল `failed_jobs` টেবিলে `created_at` কলাম নেই, তার বদলে `failed_at` কলাম আছে। `latest()` মেথড ডিফল্টভাবে `created_at` খোঁজে, তাই এটি ফিক্স করার পরিকল্পনা করা হয়।
+*   **Executing**: `App\Http\Controllers\Backend\QueueController.php` ফাইলে `latest()` মেথড আপডেট করা হয়েছে।
+*   **Work**: `DB::table('failed_jobs')` কুয়েরিতে `latest()` মেথডের আর্গুমেন্ট হিসেবে `failed_at` কলামটি নির্দিষ্ট করে দেওয়া হয়েছে যাতে এটি সঠিক কলাম অনুযায়ী সর্ট করে।
+*   **Change**:
+    ```php
+    // আগে:
+    $failedJobs = DB::table('failed_jobs')->latest()->get();
+    
+    // পরে:
+    $failedJobs = DB::table('failed_jobs')->latest('failed_at')->get();
+    ```
+
+---
+
+## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)
 *   **কিউ ব্যাচিং (Batching)**: ১০০০+ সাবস্ক্রাইবার হয়ে গেলে `Bus::batch` অথবা চাঙ্কিং (chunking) ব্যবহার করা যাতে টাইমআউট না হয়।
 *   **ইমেইল লগ**: পাঠানো নিউজলেটারগুলোর হিস্ট্রি দেখার জন্য একটি ইউজার ইন্টারফেস (UI) তৈরি করা।
