@@ -1,10 +1,10 @@
 @extends('backend.admin.dashboard')
 
-@section('content')
-    <!-- jquery cdn -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+@push('styles')
     <link rel="stylesheet" href="{{ asset('Backend/assets/vendors/dropify/dist/dropify.min.css') }}">
+@endpush
 
+@section('content')
     <div class="page-content">
         <div class="row">
             <div class="col-12 grid-margin">
@@ -338,11 +338,13 @@
             <!-- right wrapper end -->
           </div>
     </div>
+@endsection
 
+@push('scripts')
     <script src="{{ asset('Backend/assets/vendors/dropify/dist/dropify.min.js') }}"></script>
     <script>
         $(document).ready(function(){
             $('#image').dropify();
         });
     </script>
-@endsection
+@endpush

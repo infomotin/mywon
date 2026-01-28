@@ -241,6 +241,13 @@ php artisan queue:work
 *   **Work**: `dropify` ব্যবহার করে ড্র্যাগ-এন্ড-ড্রপ ইমেজ আপলোড এবং প্রিভিউ ইমপ্লিমেন্ট করা হয়েছে। `data-default-file` এট্রিবিউট ব্যবহার করে বর্তমান প্রোফাইল পিকচার দেখানো হয়েছে।
 *   **Change**: `resources/views/backend/admin/editprofile.blade.php`.
 
+### ২০২৬-০১-২৮: অ্যাডমিন লেআউট ফিক্স (jQuery Conflict & Stacks)
+*   **Event/Prompt**: `/edit-profile` পেজে লেআউট ভেঙ্গে যাচ্ছিল (Not Fix < Bape Contin Wrong Place)।
+*   **Plan**: `dashboard.blade.php` ফাইলে স্টাইল এবং স্ক্রিপ্ট স্ট্যাক (`@stack`) যুক্ত করা এবং `editprofile.blade.php` থেকে ডুপ্লিকেট jQuery CDN রিমুভ করা।
+*   **Executing**: `dashboard.blade.php` তে `@stack('styles')` এবং `@stack('scripts')` যোগ করা হয়েছে। `editprofile.blade.php` তে `@push` ব্যবহার করে Dropify লোড করা হয়েছে এবং jQuery CDN রিমুভ করা হয়েছে।
+*   **Work**: ডুপ্লিকেট jQuery লোডিং এর কারণে টেমপ্লেটের লেআউট স্ক্রিপ্ট কাজ করছিল না। এটি ফিক্স করে সঠিক আর্কিটেকচার ইমপ্লিমেন্ট করা হয়েছে।
+*   **Change**: `resources/views/backend/admin/dashboard.blade.php`, `resources/views/backend/admin/editprofile.blade.php`.
+
 ---
 
 ## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)

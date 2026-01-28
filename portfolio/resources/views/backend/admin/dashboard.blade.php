@@ -36,6 +36,8 @@
     <!-- End layout styles -->
 
     <link rel="shortcut icon" href="{{ asset('Backend/assets/images/favicon.png') }}" />
+    
+    @stack('styles')
 </head>
 
 <body>
@@ -78,6 +80,7 @@
     <script src="{{ asset('Backend/assets/js/dashboard-dark.js') }}"></script>
     <!-- End custom js for this page -->
 
+    @stack('scripts')
 </body>
 
 </html>
