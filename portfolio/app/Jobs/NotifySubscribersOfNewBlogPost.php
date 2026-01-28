@@ -30,9 +30,9 @@ class NotifySubscribersOfNewBlogPost implements ShouldQueue
      */
     public function handle(): void
     {
-        $subscribers = Subscriber::all();
+        $subscribers = Subscriber::where('is_active', true)->get();
         foreach ($subscribers as $subscriber) {
-            Mail::to($subscriber->email)->send(new NewBlogPostMail($this->blog));
+            Mail::to($subscriber->email)->send(new NewBlogPostMail($this->blog, $subscriber));
         }
     }
 }

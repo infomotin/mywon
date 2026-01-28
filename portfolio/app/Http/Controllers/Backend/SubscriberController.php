@@ -34,7 +34,7 @@ class SubscriberController extends Controller
             'message' => 'required',
         ]);
 
-        $subscribers = Subscriber::all();
+        $subscribers = Subscriber::where('is_active', true)->get();
         
         // Dispatch job to send emails in background
         dispatch(new SendNewsletterJob($subscribers, $request->subject, $request->message));

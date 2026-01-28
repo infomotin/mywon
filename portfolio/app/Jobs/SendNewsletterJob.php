@@ -34,7 +34,7 @@ class SendNewsletterJob implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->subscribers as $subscriber) {
-            Mail::to($subscriber->email)->send(new NewsletterMail($this->subject, $this->message));
+            Mail::to($subscriber->email)->send(new NewsletterMail($this->subject, $this->message, $subscriber));
         }
     }
 }
