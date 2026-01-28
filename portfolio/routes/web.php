@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\TestimonialContorller;
 use App\Http\Controllers\frontend\FrontEndController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PersonalDataController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
@@ -148,6 +149,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/contact/reply/{id}', 'reply')->name('contact.reply');
     });
 });
+//PersonalDataController
+Route::middleware('auth')->group(function () {
+    Route::controller(PersonalDataController::class)->group(function () {
+        Route::get('/personal-data', 'index')->name('personal-data.index');
+        // Route::get('/personal-data/create', 'create')->name('personal-data.create');
+        // Route::post('/personal-data/store', 'store')->name('personal-data.store');
+        // Route::get('/personal-data/edit/{id}', 'edit')->name('personal-data.edit');
+        // Route::post('/personal-data/update/{id}', 'update')->name('personal-data.update');
+        // Route::delete('/personal-data/destroy/{id}', 'destroy')->name('personal-data.destroy');
+    });
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

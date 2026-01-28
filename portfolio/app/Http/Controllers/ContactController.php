@@ -33,7 +33,7 @@ class ContactController extends Controller
         //Send SMS to user
         $sms = new SendSMSservice();
         $message = 'Thank you for your message. We will get back to you soon.';
-        $sms->send($contact->phone, $message);
+        // $sms->send($contact->phone, $message);
         return redirect()->route('home')->with('success', 'Message sent successfully');
     }
     public function reply(Request $request, $id)
