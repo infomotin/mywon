@@ -229,12 +229,11 @@ php artisan queue:work
 *   **Work**: এখন ফুটার ফর্মের ডিজাইন `main.css` থেকে কন্ট্রোল করা যাচ্ছে, যা ক্লিন কোড এবং ফিউচার মেইনটেইনেন্স সহজ করেছে।
 *   **Change**: `resources/views/frontend/body/components/footer.blade.php`, `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
 
-### ২০২৬-০১-২৮: হিরো সেকশন টেক্সট কালার আপডেট
-*   **Event/Prompt**: "I am Tanvir Ahmed" টেক্সটের কালার আপডেট করার অনুরোধ (Update Clour)।
-*   **Plan**: "I am" এবং "Tanvir Ahmed" (Name) আলাদা স্টাইল করার জন্য HTML স্ট্রাকচার পরিবর্তন করা এবং নামের উপর গ্রেডিয়েন্ট ইফেক্ট প্রয়োগ করা।
+### ২০২৬-০১-২৮: হিরো সেকশন টেক্সট কালার আপডেট (সাদা)
+*   **Event/Prompt**: "in frontend text colur make it Withe" (আগের গ্রেডিয়েন্ট পরিবর্তন করে সাদা করার অনুরোধ)।
+*   **Plan**: `main.css` এ `.hero-sub-title` এবং `.hero-name` এর কালার সাদা (`var(--tj-white)`) করা। `light-mode.css` এ ভিজিবিলিটি ঠিক রাখার জন্য গাঢ় কালার (`var(--tj-theme-secondary)`) রাখা।
 *   **Executing**:
-    *   `hero.blade.php`: `{{ $hero->name }}` কে `<span class="hero-name">` ট্যাগের মধ্যে র‍্যাপ করা হয়েছে।
-    *   `main.css`: `.hero-name` ক্লাসে গ্রেডিয়েন্ট কালার (Primary to White) এবং `.hero-sub-title` এ ফন্ট স্টাইল নিশ্চিত করা হয়েছে।
-    *   `light-mode.css`: লাইট মোডের জন্য `.hero-name` এ গ্রেডিয়েন্ট (Primary to Secondary) সেট করা হয়েছে।
-*   **Work**: হিরো সেকশনের নামের অংশটি এখন গ্রেডিয়েন্ট কালারে প্রদর্শিত হচ্ছে, যা আরও আকর্ষণীয় এবং মডার্ন।
-*   **Change**: `resources/views/frontend/body/components/hero.blade.php`, `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
+    *   `main.css`: `.hero-sub-title` এবং `.hero-name` এ `color: var(--tj-white)` সেট করা হয়েছে এবং গ্রেডিয়েন্ট রিমুভ করা হয়েছে।
+    *   `light-mode.css`: `.hero-name` এর গ্রেডিয়েন্ট রিমুভ করে `color: var(--tj-theme-secondary)` সেট করা হয়েছে।
+*   **Work**: এখন ডার্ক মোডে "I am Tanvir Ahmed" সম্পূর্ণ সাদা দেখাবে এবং লাইট মোডে গাঢ় দেখাবে।
+*   **Change**: `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
