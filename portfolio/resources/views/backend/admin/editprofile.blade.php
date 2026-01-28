@@ -3,6 +3,7 @@
 @section('content')
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('Backend/assets/vendors/dropify/dist/dropify.min.css') }}">
 
     <div class="page-content">
         <div class="row">
@@ -260,8 +261,7 @@
 
                       <div class="form-group mb-3">
                         <label for="image">Profile Image</label>
-                        <input type="file" class="form-control" id="image" name="profile_photo_path" accept="image/*" >
-                        <img id="image-preview" src="{{ ($admin->profile_photo_path) ? asset('upload/admin_images/' . $admin->profile_photo_path) : asset('backend/assets/images/faces/1.jpg') }}" alt="Your profile image" style="max-width: 100px; margin-top: 20px; margin-bottom: 20px">
+                        <input type="file" class="form-control" id="image" name="profile_photo_path" accept="image/*" data-default-file="{{ ($admin->profile_photo_path) ? asset('upload/admin_images/' . $admin->profile_photo_path) : asset('backend/assets/images/faces/1.jpg') }}">
                       </div>
                       <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -339,13 +339,10 @@
           </div>
     </div>
 
+    <script src="{{ asset('Backend/assets/vendors/dropify/dist/dropify.min.js') }}"></script>
     <script>
-        $('#image').change(function() {
-          let reader = new FileReader();
-          reader.onload = (e) => {
-            $('#image-preview').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(this.files[0]);
+        $(document).ready(function(){
+            $('#image').dropify();
         });
-      </script>
+    </script>
 @endsection

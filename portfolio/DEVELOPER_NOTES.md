@@ -234,6 +234,13 @@ php artisan queue:work
 *   **Work**: `navbar.blade.php` ফাইলে ইউজারের নাম, ইমেইল এবং প্রোফাইল পিকচার ডায়নামিক করা হয়েছে। প্রোফাইল লিঙ্কটি `admin.edit.profile` রুটে পয়েন্ট করা হয়েছে। Web Apps মেনুর প্রোফাইল লিঙ্কও আপডেট করা হয়েছে।
 *   **Change**: `resources/views/backend/admin/body/navbar.blade.php`.
 
+### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ ফাইল আপলোড ডিজাইন ফিক্স
+*   **Event/Prompt**: `/edit-profile` পেজে ফাইল আপলোড ইনপুট এবং প্রিভিউ এর ডিজাইন ভালো ছিল না।
+*   **Plan**: `editprofile.blade.php` ফাইলে `Dropify` প্লাগিন যুক্ত করা।
+*   **Executing**: Dropify CSS এবং JS যুক্ত করা এবং স্ট্যান্ডার্ড ফাইল ইনপুটকে Dropify দিয়ে রিপ্লেস করা।
+*   **Work**: `dropify` ব্যবহার করে ড্র্যাগ-এন্ড-ড্রপ ইমেজ আপলোড এবং প্রিভিউ ইমপ্লিমেন্ট করা হয়েছে। `data-default-file` এট্রিবিউট ব্যবহার করে বর্তমান প্রোফাইল পিকচার দেখানো হয়েছে।
+*   **Change**: `resources/views/backend/admin/editprofile.blade.php`.
+
 ---
 
 ## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)
