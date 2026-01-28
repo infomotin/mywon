@@ -80,6 +80,12 @@
                     <span class="link-title">Website Setting</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('smtp.setting') }}" class="nav-link">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">Mail Configuration</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

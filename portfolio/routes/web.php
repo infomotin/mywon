@@ -16,6 +16,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\SmtpSettingController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
@@ -169,6 +170,14 @@ Route::middleware('auth')->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::get('/setting', 'index')->name('setting.index');
         Route::post('/setting/update', 'update')->name('setting.update');
+    });
+});
+
+//SmtpSettingController
+Route::middleware('auth')->group(function () {
+    Route::controller(SmtpSettingController::class)->group(function () {
+        Route::get('/smtp/setting', 'SmtpSetting')->name('smtp.setting');
+        Route::post('/smtp/update', 'UpdateSmtpSetting')->name('update.smtp.setting');
     });
 });
 
