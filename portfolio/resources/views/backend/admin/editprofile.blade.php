@@ -74,7 +74,7 @@
                   <p>{{ $admin->about ?? 'Update your profile to add a bio.' }}</p>
                   <div class="mt-3">
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">Joined:</label>
-                    <p class="text-muted">{{ $admin->created_at->diffForHumans() }}</p>
+                    <p class="text-muted">{{ $admin->created_at ? $admin->created_at->diffForHumans() : 'Unknown' }}</p>
                   </div>
                   <div class="mt-3">
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">Lives:</label>

@@ -220,6 +220,20 @@ php artisan queue:work
 *   **Work**: `profile_photo_url` (যা Jetstream এর অংশ) পরিবর্তন করে কাস্টম পাথ লজিক `asset('upload/admin_images/' ...)` বসানো হয়েছে, যা ফাইলের উপরের অংশেও ব্যবহার করা হয়েছে।
 *   **Change**: `editprofile.blade.php`.
 
+### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ diffForHumans এরর ফিক্স
+*   **Event/Prompt**: `/edit-profile` পেজে এরর আসছিল (Call to a member function diffForHumans() on null)।
+*   **Plan**: `editprofile.blade.php` ফাইলে `created_at` null কিনা চেক করা।
+*   **Executing**: `diffForHumans()` কল করার আগে কন্ডিশনাল চেক বসানো।
+*   **Work**: `$admin->created_at` যদি `null` হয় তবে `diffForHumans()` কল না করে 'Unknown' দেখানোর ব্যবস্থা করা হয়েছে।
+*   **Change**: `editprofile.blade.php`.
+
+### ২০২৬-০১-২৮: অ্যাডমিন হেডার মেনু ডায়নামিক ও এরর ফিক্স
+*   **Event/Prompt**: হেডার মেনু (Navbar) প্রোফাইল সেকশনে স্ট্যাটিক ডাটা ছিল এবং ভুল ইমেজ পাথ ছিল।
+*   **Plan**: `navbar.blade.php` ফাইলে `auth()->user()` ব্যবহার করে লগইন করা ইউজারের ডাটা (নাম, ইমেইল, ছবি) ডায়নামিক করা।
+*   **Executing**: হার্ডকোডেড ভ্যালুগুলো রিপ্লেস করা এবং প্রোফাইল লিঙ্ক আপডেট করা।
+*   **Work**: `navbar.blade.php` ফাইলে ইউজারের নাম, ইমেইল এবং প্রোফাইল পিকচার ডায়নামিক করা হয়েছে। প্রোফাইল লিঙ্কটি `admin.edit.profile` রুটে পয়েন্ট করা হয়েছে। Web Apps মেনুর প্রোফাইল লিঙ্কও আপডেট করা হয়েছে।
+*   **Change**: `resources/views/backend/admin/body/navbar.blade.php`.
+
 ---
 
 ## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)
