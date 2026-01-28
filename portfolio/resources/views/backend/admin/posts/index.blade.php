@@ -36,14 +36,10 @@
                                                 <span class="badge bg-info">{{ $tag->name }}</span>
                                             @endforeach
                                         </td>
-                                        <td>{{ $item->user->name ?? 'Admin' }}</td>
+                                        <td>{{ $item->author->name ?? 'Admin' }}</td>
                                         <td>
                                             <a href="{{ route('blog.edit', $item->id) }}" class="btn btn-primary">Edit</a>
-                                            <form action="{{ route('blog.destroy', $item->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            <a href="{{ route('blog.delete', $item->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
