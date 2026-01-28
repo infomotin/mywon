@@ -73,13 +73,17 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item nav-category">Setting</li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="link-icon" data-feather="settings"></i>
+                    <span class="link-title">Website Setting</span>
+                </a>
+            </li>
         </ul>
     </div>
-    <div class="sidebar-footer">
-        <p class="copyright">© 2024 My App</p>
-    </div>
 </nav>
-{{-- <nav class="settings-sidebar">
+<!-- <nav class="settings-sidebar">
     <div class="sidebar-body">
         <a href="#" class="settings-sidebar-toggler">
             <i data-feather="settings"></i>
@@ -95,4 +99,4 @@
             </a>
         </div>
     </div>
-</nav> --}}
+</nav> -->
