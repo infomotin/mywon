@@ -44,39 +44,7 @@
    <!-- HEADER END -->
 
    <main class="site-content" id="content">
-      <!-- HERO SECTION START -->
-      @include('frontend.body.components.hero')
-      <!-- HERO SECTION END -->
-
-      <!-- SERVICES SECTION START -->
-      @include('frontend.body.components.services')
-      <!-- SERVICES SECTION END -->
-
-      <!-- start: Service Popup -->
-      @include('frontend.body.components.servicePopup')
-      <!-- end: Service Popup -->
-
       @yield('content')
-
-      <!-- TESTIMONIAL SECTION START -->
-      @include('frontend.body.components.testimonial')
-      <!-- TESTIMONIAL SECTION END -->
-
-      <!-- BLOG SECTION STAR -->
-      @include('frontend.body.components.blog')
-      <!-- BLOG SECTION END -->
-
-      <!-- CONTACT SECTION START -->
-      @include('frontend.body.components.contact')
-      <!-- CONTACT SECTION END -->
-
-      <!-- BEGIN: Contact Form Success Modal Message -->
-      @include('frontend.body.components.contact_success')
-      <!-- END: Contact Form Success Modal Message -->
-
-      <!-- BEGIN: Contact Form Fail Modal Message -->
-      @include('frontend.body.components.contact_fail')
-      <!-- END: Contact Form Fail Modal Message End -->
    </main>
 
    <!-- FOOTER AREA START -->

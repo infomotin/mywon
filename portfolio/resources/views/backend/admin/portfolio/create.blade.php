@@ -26,11 +26,42 @@
                                 </div><!-- Col -->
                                 <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Description</label>
-                                        <input type="text" class="form-control" name="description" placeholder="Enter description">
+                                        <label class="form-label">Short Description</label>
+                                        <input type="text" class="form-control" name="description" placeholder="Enter short description">
                                     </div>
                                 </div><!-- Col -->
                             </div><!-- Row -->
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Client</label>
+                                        <input type="text" class="form-control" name="client" placeholder="Enter client name">
+                                    </div>
+                                </div><!-- Col -->
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Project Date</label>
+                                        <input type="text" class="form-control" name="project_date" placeholder="e.g. Aug 2023">
+                                    </div>
+                                </div><!-- Col -->
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Technologies</label>
+                                        <input type="text" class="form-control" name="technologies" placeholder="e.g. Laravel, Vue.js">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Long Description (Details)</label>
+                                        <textarea class="form-control" name="long_description" rows="10" placeholder="Enter detailed description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="mb-3">

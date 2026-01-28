@@ -48,7 +48,7 @@
                      <div class="image-box">
                         <img src="{{ asset('upload/portfolio/'.$portfolio->image) }}" alt="" />
                      </div>
-                     <a href="{{ $portfolio->url }}" style="color:#fff" target="_blank">
+                     <a href="{{ route('portfolio.details', $portfolio->id) }}" style="color:#fff">
                         <div class="content-box">
                         <h3 class="portfolio-title">{{ $portfolio->title }}</h3>
                         <p>{{ $portfolio->subtitle }}</p>

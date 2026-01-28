@@ -47,6 +47,19 @@
                                     </div>
                                 </div>
 
+                                <hr>
+
+                                <div class="mb-4">
+                                    <h5 class="mb-3">Native Live Chat Configuration</h5>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input type="checkbox" class="form-check-input" id="native_chat_status" name="native_chat_status" {{ $setting->native_chat_status ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="native_chat_status">Enable Native Chat Widget</label>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted">This is the custom built-in chat system. Check "Chat Inbox" in sidebar to reply.</p>
+                                </div>
+
                                 <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                             </form>
 

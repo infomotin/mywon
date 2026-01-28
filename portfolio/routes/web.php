@@ -20,8 +20,10 @@ use App\Http\Controllers\Backend\SmtpSettingController;
 use App\Http\Controllers\Backend\LiveChatSettingController;
 use App\Http\Controllers\Frontend\ChatController;
 use App\Http\Controllers\Backend\ChatController as BackendChatController;
+use App\Http\Controllers\Frontend\PortfolioController as FrontendPortfolioController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
+Route::get('/portfolio/{id}', [FrontendPortfolioController::class, 'details'])->name('portfolio.details');
 
 // Frontend Chat Routes
 Route::post('/chat/register', [ChatController::class, 'RegisterGuest']);
@@ -196,13 +198,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/live/chat/setting', 'LiveChatSetting')->name('live.chat.setting');
         Route::post('/live/chat/update', 'UpdateLiveChatSetting')->name('update.live.chat.setting');
     });
-
-    // Native Chat Admin Routes
-    Route::controller(BackendChatController::class)->group(function () {
-        Route::get('/admin/chat/inbox', 'ChatInbox')->name('admin.chat.inbox');
-        Route::get('/admin/chat/get/{sessionId}', 'GetConversation');
-        Route::post('/admin/chat/reply', 'AdminReply');
-    });
+    
+    // Admin Chat Inbox
+    Route::get('/admin/chat/inbox', [BackendChatController::class, 'index'])->name('admin.chat.inbox');
+    Route::get('/admin/chat/get-messages/{sessionId}', [BackendChatController::class, 'getMessages']);
+    Route::post('/admin/chat/reply', [BackendChatController::class, 'reply']);
 });
-
-require __DIR__ . '/auth.php';

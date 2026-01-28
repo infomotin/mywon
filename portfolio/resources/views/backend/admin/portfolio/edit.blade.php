@@ -26,11 +26,42 @@
                                 </div><!-- Col -->
                                 <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Description</label>
-                                        <input type="text" class="form-control" name="description" placeholder="Enter description" value="{{ $portfolio->description }}">
+                                        <label class="form-label">Short Description</label>
+                                        <input type="text" class="form-control" name="description" placeholder="Enter short description" value="{{ $portfolio->description }}">
                                     </div>
                                 </div><!-- Col -->
                             </div><!-- Row -->
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Client</label>
+                                        <input type="text" class="form-control" name="client" placeholder="Enter client name" value="{{ $portfolio->client }}">
+                                    </div>
+                                </div><!-- Col -->
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Project Date</label>
+                                        <input type="text" class="form-control" name="project_date" placeholder="e.g. Aug 2023" value="{{ $portfolio->project_date }}">
+                                    </div>
+                                </div><!-- Col -->
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Technologies</label>
+                                        <input type="text" class="form-control" name="technologies" placeholder="e.g. Laravel, Vue.js" value="{{ $portfolio->technologies }}">
+                                    </div>
+                                </div><!-- Col -->
+                            </div><!-- Row -->
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Long Description (Details)</label>
+                                        <textarea class="form-control" name="long_description" rows="10" placeholder="Enter detailed description">{{ $portfolio->long_description }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="mb-3">

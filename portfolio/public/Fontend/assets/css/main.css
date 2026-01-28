@@ -144,6 +144,7 @@ body {
 	font-size: var(--tj-fz-body);
 	font-weight: var(--tj-fw-regular);
 	color: var(--tj-body);
+	background-color: var(--tj-bg);
 }
 
 h1,
@@ -1422,14 +1423,14 @@ body.loaded {
 	right: 0;
 	padding: 20px;
 	padding-right: 50px;
-	opacity: 0;
-	visibility: hidden;
+	opacity: 1;
+	visibility: visible;
 	-webkit-transition: 0.3s;
 	-o-transition: 0.3s;
 	transition: 0.3s;
-	-webkit-transform: translateY(15px);
-	-ms-transform: translateY(15px);
-	transform: translateY(15px);
+	-webkit-transform: translateY(0);
+	-ms-transform: translateY(0);
+	transform: translateY(0);
 	background: var(--tj-theme-primary);
 	background: -o-linear-gradient(
 		190deg,
@@ -1445,9 +1446,9 @@ body.loaded {
 .portfolio-box .portfolio-item:hover .content-box {
 	opacity: 1;
 	visibility: visible;
-	-webkit-transform: translateY(0);
-	-ms-transform: translateY(0);
-	transform: translateY(0);
+	-webkit-transform: translateY(-10px);
+	-ms-transform: translateY(-10px);
+	transform: translateY(-10px);
 }
 .portfolio-box .portfolio-item .content-box .portfolio-title {
 	font-size: 30px;

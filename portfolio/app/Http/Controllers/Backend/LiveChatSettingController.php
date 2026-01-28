@@ -33,6 +33,7 @@ class LiveChatSettingController extends Controller
         $setting->whatsapp_status = $request->whatsapp_status ? 1 : 0;
         $setting->tawk_to_script = $request->tawk_to_script;
         $setting->tawk_to_status = $request->tawk_to_status ? 1 : 0;
+        $setting->native_chat_status = $request->native_chat_status ? 1 : 0;
         
         $setting->save();
 

@@ -47,6 +47,10 @@ class PortfolioContorller extends Controller
         }
 
         $portfolio->description = $request->description;
+        $portfolio->long_description = $request->long_description;
+        $portfolio->client = $request->client;
+        $portfolio->project_date = $request->project_date;
+        $portfolio->technologies = $request->technologies;
         $portfolio->services_cat_id = $request->services_cat_id;
         $portfolio->url = $request->url;
         $portfolio->save();
@@ -86,6 +90,10 @@ class PortfolioContorller extends Controller
         }
 
         $portfolio->description = $request->description;
+        $portfolio->long_description = $request->long_description;
+        $portfolio->client = $request->client;
+        $portfolio->project_date = $request->project_date;
+        $portfolio->technologies = $request->technologies;
         $portfolio->services_cat_id = $request->services_cat_id;
         $portfolio->url = $request->url;
         $portfolio->save();
