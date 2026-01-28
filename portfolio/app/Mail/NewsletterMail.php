@@ -14,14 +14,16 @@ class NewsletterMail extends Mailable
 
     public $subjectLine;
     public $content;
+    public $subscriber;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($subject, $content)
+    public function __construct($subject, $content, $subscriber)
     {
         $this->subjectLine = $subject;
         $this->content = $content;
+        $this->subscriber = $subscriber;
     }
 
     /**

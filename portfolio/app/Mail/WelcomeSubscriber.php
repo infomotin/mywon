@@ -10,9 +10,11 @@ class WelcomeSubscriber extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct()
+    public $subscriber;
+
+    public function __construct($subscriber)
     {
-        //
+        $this->subscriber = $subscriber;
     }
 
     public function build()

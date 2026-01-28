@@ -37,6 +37,7 @@ Route::post('/chat/send', [ChatController::class, 'SendMessage']);
 Route::get('/chat/get-messages', [ChatController::class, 'GetMessages']);
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
 Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
+Route::get('/unsubscribe/{email}/{token}', [SubscriberController::class, 'unsubscribe'])->name('unsubscribe');
 
 Route::get('/dashboard', function () {
     return view('/backend/admin/index');

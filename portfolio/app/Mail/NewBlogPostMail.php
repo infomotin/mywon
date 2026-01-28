@@ -13,13 +13,15 @@ class NewBlogPostMail extends Mailable
     use Queueable, SerializesModels;
 
     public $blog;
+    public $subscriber;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($blog)
+    public function __construct($blog, $subscriber)
     {
         $this->blog = $blog;
+        $this->subscriber = $subscriber;
     }
 
     /**

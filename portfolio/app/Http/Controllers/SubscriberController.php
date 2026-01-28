@@ -24,12 +24,12 @@ class SubscriberController extends Controller
         }
 
         try {
-            Subscriber::create([
+            $subscriber = Subscriber::create([
                 'email' => $request->email
             ]);
 
             // Send Welcome Email
-            Mail::to($request->email)->send(new WelcomeSubscriber());
+            Mail::to($request->email)->send(new WelcomeSubscriber($subscriber));
 
             return response()->json([
                 'status' => 'success',
@@ -41,5 +41,19 @@ class SubscriberController extends Controller
                 'message' => 'Something went wrong. Please try again later.'
             ], 500);
         }
+    }
+
+    public function unsubscribe($email, $token)
+    {
+        $subscriber = Subscriber::where('email', $email)->where('token', $token)->first();
+
+        if ($subscriber) {
+            $subscriber->is_active = false;
+            $subscriber->save();
+
+            return view('frontend.unsubscribe_success');
+        }
+
+        return view('frontend.unsubscribe_fail');
     }
 }

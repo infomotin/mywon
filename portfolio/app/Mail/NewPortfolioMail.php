@@ -13,13 +13,15 @@ class NewPortfolioMail extends Mailable
     use Queueable, SerializesModels;
 
     public $portfolio;
+    public $subscriber;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($portfolio)
+    public function __construct($portfolio, $subscriber)
     {
         $this->portfolio = $portfolio;
+        $this->subscriber = $subscriber;
     }
 
     /**
