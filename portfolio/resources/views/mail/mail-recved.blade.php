@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <td>
-                    We have received your email regarding {{ $contact->subject }}.
+                    We have received your email.
                 </td>
             </tr>
             <tr>

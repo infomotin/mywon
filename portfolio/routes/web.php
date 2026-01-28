@@ -22,6 +22,7 @@ use App\Http\Controllers\Frontend\ChatController;
 use App\Http\Controllers\Backend\ChatController as BackendChatController;
 use App\Http\Controllers\Frontend\PortfolioController as FrontendPortfolioController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
+use App\Http\Controllers\SubscriberController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::get('/portfolio/{id}', [FrontendPortfolioController::class, 'details'])->name('portfolio.details');
@@ -33,6 +34,7 @@ Route::get('/chat/check-status', [ChatController::class, 'CheckGuestStatus']);
 Route::post('/chat/send', [ChatController::class, 'SendMessage']);
 Route::get('/chat/get-messages', [ChatController::class, 'GetMessages']);
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
 
 Route::get('/dashboard', function () {
     return view('/backend/admin/index');

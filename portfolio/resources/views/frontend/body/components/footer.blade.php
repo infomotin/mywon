@@ -17,6 +17,21 @@
                    </ul>
                 </nav>
              </div>
+             
+             <!-- Subscription Form -->
+             <div class="footer-subscribe" style="margin: 30px 0; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <h5 style="color: var(--tj-white); margin-bottom: 20px;">Subscribe to my Newsletter</h5>
+                <form id="subscribeForm" class="subscribe-form position-relative">
+                   @csrf
+                   <div class="input-group">
+                      <input type="email" name="email" class="form-control" placeholder="Enter your email" required 
+                             style="background: var(--tj-theme-accent-2); border: 1px solid var(--tj-border); color: var(--tj-white); padding: 15px 20px; border-radius: 5px 0 0 5px;">
+                      <button type="submit" class="btn tj-btn-primary" style="border-radius: 0 5px 5px 0;">Subscribe</button>
+                   </div>
+                   <div id="subscribe-message" class="mt-2 text-start"></div>
+                </form>
+             </div>
+
              <div class="copy-text">
                 <p>&copy; {{ date('Y') }} All rights reserved by <a href="#" target="_blank">{{ $setting->website_name ?? 'Mjnamadi' }}</a></p>
              </div>
@@ -24,3 +39,38 @@
        </div>
     </div>
  </footer>
+
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script>
+    $(document).ready(function() {
+        $('#subscribeForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            var form = $(this);
+            var messageDiv = $('#subscribe-message');
+            var submitBtn = form.find('button[type="submit"]');
+            
+            submitBtn.prop('disabled', true).text('Subscribing...');
+            messageDiv.html('');
+
+            $.ajax({
+                url: "{{ route('subscribe') }}",
+                type: "POST",
+                data: form.serialize(),
+                success: function(response) {
+                    messageDiv.html('<span class="text-success">' + response.message + '</span>');
+                    form[0].reset();
+                    submitBtn.prop('disabled', false).text('Subscribe');
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Something went wrong. Please try again.';
+                    if(xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    messageDiv.html('<span class="text-danger">' + errorMsg + '</span>');
+                    submitBtn.prop('disabled', false).text('Subscribe');
+                }
+            });
+        });
+    });
+ </script>
