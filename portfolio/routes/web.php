@@ -17,8 +17,15 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PersonalDataController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SmtpSettingController;
+use App\Http\Controllers\Backend\LiveChatSettingController;
+use App\Http\Controllers\Frontend\ChatController;
+use App\Http\Controllers\Backend\ChatController as BackendChatController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
+
+// Frontend Chat Routes
+Route::post('/chat/send', [ChatController::class, 'SendMessage']);
+Route::get('/chat/get-messages', [ChatController::class, 'GetMessages']);
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::get('/dashboard', function () {
@@ -178,6 +185,21 @@ Route::middleware('auth')->group(function () {
     Route::controller(SmtpSettingController::class)->group(function () {
         Route::get('/smtp/setting', 'SmtpSetting')->name('smtp.setting');
         Route::post('/smtp/update', 'UpdateSmtpSetting')->name('update.smtp.setting');
+    });
+});
+
+//LiveChatSettingController
+Route::middleware('auth')->group(function () {
+    Route::controller(LiveChatSettingController::class)->group(function () {
+        Route::get('/live/chat/setting', 'LiveChatSetting')->name('live.chat.setting');
+        Route::post('/live/chat/update', 'UpdateLiveChatSetting')->name('update.live.chat.setting');
+    });
+
+    // Native Chat Admin Routes
+    Route::controller(BackendChatController::class)->group(function () {
+        Route::get('/admin/chat/inbox', 'ChatInbox')->name('admin.chat.inbox');
+        Route::get('/admin/chat/get/{sessionId}', 'GetConversation');
+        Route::post('/admin/chat/reply', 'AdminReply');
     });
 });
 

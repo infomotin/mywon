@@ -83,6 +83,23 @@
    @include('frontend.body.components.footer')
    <!-- FOOTER AREA END -->
 
+   <!-- Live Chat Integration -->
+   @if($liveChatSetting && $liveChatSetting->whatsapp_status && $liveChatSetting->whatsapp_number)
+   <div class="whatsapp-chat" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
+       <a href="https://wa.me/{{ $liveChatSetting->whatsapp_number }}" target="_blank">
+           <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Chat" style="width: 50px; height: 50px;">
+       </a>
+   </div>
+   @endif
+
+   @if($liveChatSetting && $liveChatSetting->tawk_to_status && $liveChatSetting->tawk_to_script)
+       {!! $liveChatSetting->tawk_to_script !!}
+   @endif
+   
+   <!-- Native Chat Widget -->
+   @include('frontend.body.components.chat_widget')
+   <!-- End Live Chat Integration -->
+
    <!-- CSS here -->
    <script src="{{ asset('/Fontend/assets/js/jquery.min.js') }}"></script>
    <script src="{{ asset('/Fontend/assets/js/bootstrap.bundle.min.js') }}"></script>

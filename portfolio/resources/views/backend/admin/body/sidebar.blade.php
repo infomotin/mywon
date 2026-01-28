@@ -86,6 +86,18 @@
                     <span class="link-title">Mail Configuration</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('live.chat.setting') }}" class="nav-link">
+                    <i class="link-icon" data-feather="settings"></i>
+                    <span class="link-title">Live Chat Setting</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.chat.inbox') }}" class="nav-link">
+                    <i class="link-icon" data-feather="message-square"></i>
+                    <span class="link-title">Chat Inbox</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

@@ -7,6 +7,7 @@ use App\Services\SendSMSservice;
 
 use App\Models\Setting;
 use App\Models\SmtpSetting;
+use App\Models\LiveChatSetting;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
 
@@ -29,7 +30,9 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $setting = Setting::find(1);
-            $view->with('setting', $setting);
+            $liveChatSetting = LiveChatSetting::find(1);
+            $view->with('setting', $setting)
+                 ->with('liveChatSetting', $liveChatSetting);
         });
 
         if (\Schema::hasTable('smtp_settings')) {
