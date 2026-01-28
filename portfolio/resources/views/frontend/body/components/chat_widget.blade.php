@@ -40,6 +40,50 @@
         justify-content: space-between;
         align-items: center;
     }
+    #chat-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+    }
+    #guest-login-form {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        justify-content: center;
+        height: 100%;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .form-group label {
+        font-size: 14px;
+        color: #333;
+    }
+    .form-group input {
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        outline: none;
+    }
+    #start-chat-btn {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #chat-interface {
+        display: none; /* Hidden by default until logged in */
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+    }
     #chat-messages {
         flex: 1;
         padding: 10px;
@@ -99,12 +143,32 @@
             <span>Live Chat</span>
             <span style="cursor: pointer;" onclick="toggleChat()">×</span>
         </div>
-        <div id="chat-messages">
-            <!-- Messages go here -->
-        </div>
-        <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Type a message...">
-            <button id="chat-send" onclick="sendMessage()">Send</button>
+        
+        <div id="chat-content-wrapper">
+            <!-- Login Form -->
+            <div id="guest-login-form">
+                <p style="text-align: center; color: #666;">Please enter your details to start chatting.</p>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="guest-name" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="guest-email" placeholder="Your Email">
+                </div>
+                <button id="start-chat-btn" onclick="registerGuest()">Start Chat</button>
+            </div>
+
+            <!-- Chat Interface -->
+            <div id="chat-interface">
+                <div id="chat-messages">
+                    <!-- Messages go here -->
+                </div>
+                <div id="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button id="chat-send" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -112,6 +176,7 @@
 <script>
     let chatOpen = false;
     let chatPollInterval = null;
+    let isRegistered = false;
 
     function toggleChat() {
         chatOpen = !chatOpen;
@@ -121,13 +186,66 @@
         if (chatOpen) {
             circle.style.display = 'none';
             box.style.display = 'flex';
-            fetchFrontendMessages();
-            chatPollInterval = setInterval(fetchFrontendMessages, 3000);
+            checkRegistration();
         } else {
             circle.style.display = 'block';
             box.style.display = 'none';
             if (chatPollInterval) clearInterval(chatPollInterval);
         }
+    }
+
+    function checkRegistration() {
+        $.ajax({
+            url: '/chat/check-status',
+            method: 'GET',
+            success: function(response) {
+                if (response.registered) {
+                    showChatInterface();
+                } else {
+                    showLoginForm();
+                }
+            }
+        });
+    }
+
+    function showLoginForm() {
+        document.getElementById('guest-login-form').style.display = 'flex';
+        document.getElementById('chat-interface').style.display = 'none';
+    }
+
+    function showChatInterface() {
+        document.getElementById('guest-login-form').style.display = 'none';
+        document.getElementById('chat-interface').style.display = 'flex';
+        fetchFrontendMessages();
+        chatPollInterval = setInterval(fetchFrontendMessages, 3000);
+    }
+
+    function registerGuest() {
+        const name = document.getElementById('guest-name').value;
+        const email = document.getElementById('guest-email').value;
+
+        if (!name || !email) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        $.ajax({
+            url: '/chat/register',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                name: name,
+                email: email
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    showChatInterface();
+                }
+            },
+            error: function(xhr) {
+                alert('Error registering. Please try again.');
+            }
+        });
     }
 
     function fetchFrontendMessages() {

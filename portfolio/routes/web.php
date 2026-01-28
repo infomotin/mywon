@@ -24,6 +24,8 @@ use App\Http\Controllers\Backend\ChatController as BackendChatController;
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
 // Frontend Chat Routes
+Route::post('/chat/register', [ChatController::class, 'RegisterGuest']);
+Route::get('/chat/check-status', [ChatController::class, 'CheckGuestStatus']);
 Route::post('/chat/send', [ChatController::class, 'SendMessage']);
 Route::get('/chat/get-messages', [ChatController::class, 'GetMessages']);
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');

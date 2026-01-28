@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ChatMessage;
+use App\Models\GuestUser;
 
 class ChatController extends Controller
 {
     public function ChatInbox()
     {
-        // Get all unique sessions with their last message
-        $conversations = ChatMessage::select('session_id')
+        // Get all unique sessions with their last message and guest info
+        $conversations = ChatMessage::select('chat_messages.session_id')
             ->distinct()
-            ->get();
+            ->leftJoin('guest_users', 'chat_messages.session_id', '=', 'guest_users.session_id')
+            ->select('chat_messages.session_id', 'guest_users.name', 'guest_users.email')
+            ->get()
+            ->unique('session_id'); // Ensure uniqueness if multiple messages
             
         return view('backend.chat.index', compact('conversations'));
     }

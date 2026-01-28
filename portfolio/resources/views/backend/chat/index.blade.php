@@ -27,7 +27,7 @@
                             <div class="aside-body">
                                 <ul class="list-unstyled chat-list" id="chatList">
                                     @foreach($conversations as $convo)
-                                    <li class="chat-item" onclick="loadConversation('{{ $convo->session_id }}')">
+                                    <li class="chat-item" onclick="loadConversation('{{ $convo->session_id }}', '{{ $convo->name ?? 'Guest User' }}')">
                                         <a href="javascript:;" class="d-flex align-items-center">
                                             <figure class="mb-0 me-2">
                                                 <img src="https://via.placeholder.com/30x30" class="img-xs rounded-circle" alt="user">
@@ -35,8 +35,8 @@
                                             </figure>
                                             <div class="d-flex justify-content-between flex-grow-1 border-bottom">
                                                 <div>
-                                                    <p class="text-body fw-bolder">Guest User</p>
-                                                    <p class="text-muted tx-13">{{ substr($convo->session_id, 0, 8) }}...</p>
+                                                    <p class="text-body fw-bolder">{{ $convo->name ?? 'Guest User' }}</p>
+                                                    <p class="text-muted tx-13">{{ $convo->email ?? 'No Email' }}</p>
                                                 </div>
                                             </div>
                                         </a>
@@ -81,10 +81,10 @@
     let currentSessionId = null;
     let pollInterval = null;
 
-    function loadConversation(sessionId) {
+    function loadConversation(sessionId, guestName) {
         currentSessionId = sessionId;
         $('#currentSessionId').val(sessionId);
-        $('#currentChatUser').text('Guest: ' + sessionId.substring(0, 8));
+        $('#currentChatUser').text(guestName);
         
         fetchMessages();
         
