@@ -1,106 +1,106 @@
-# Developer Documentation & Project Enhancement Log
+# ডেভেলপার ডকুমেন্টেশন এবং প্রজেক্ট আপডেট লগ
 
-**Date:** 2026-01-28  
-**Project:** Personal Portfolio & Blog System  
-**Framework:** Laravel 12.x  
-**Author:** AI Assistant (Trae IDE)
-
----
-
-## 1. Executive Summary & Intent
-This document details the recent extensive enhancements made to the Portfolio application. The primary goal was to transform a static portfolio site into a dynamic, interactive platform with content management, user engagement (subscriptions), and automated marketing capabilities (newsletters).
-
-The development followed a user-driven roadmap:
-1.  **Portfolio Deep-Dive**: Expanding project showcases.
-2.  **Content Engine**: Building a full-featured blog system.
-3.  **Audience Retention**: Implementing subscription and contact mechanisms.
-4.  **Automation**: Automating communication to keep the audience engaged.
+**তারিখ:** ২০২৬-০১-২৮  
+**প্রজেক্ট:** পার্সোনাল পোর্টফোলিও এবং ব্লগ সিস্টেম  
+**ফ্রেমওয়ার্ক:** লারাভেল ১২.x  
+**লেখক:** এআই অ্যাসিস্ট্যান্ট (Trae IDE)
 
 ---
 
-## 2. Feature Implementation Log (The "What" & "Why")
+## ১. প্রজেক্ট সারাংশ এবং উদ্দেশ্য (Executive Summary)
+এই ডকুমেন্টটি পোর্টফোলিও অ্যাপ্লিকেশনের সাম্প্রতিক বড় পরিবর্তনগুলোর বিস্তারিত বিবরণ। আমাদের মূল লক্ষ্য ছিল একটি সাধারণ স্ট্যাটিক পোর্টফোলিও সাইটকে একটি ডাইনামিক, ইন্টারঅ্যাকটিভ প্ল্যাটফর্মে রূপান্তর করা, যেখানে কন্টেন্ট ম্যানেজমেন্ট, ইউজার এনগেজমেন্ট (সাবস্ক্রিপশন) এবং অটোমেটেড মার্কেটিং (নিউজলেটার) সুবিধা থাকবে।
 
-### A. Portfolio Management System
-*   **Goal**: Move beyond simple image galleries to detailed case studies.
-*   **Implementation**:
-    *   **Database**: Added `long_description`, `client`, `project_date`, `technologies`, and `url` to the `portfolios` table.
-    *   **Frontend**: Created `portfolio_details.blade.php` to display full project specs.
-    *   **Backend**: Updated `PortfolioController` to handle rich text and new fields.
-*   **Why**: Clients need to understand the *context* and *tech stack* of a project, not just see a screenshot.
-
-### B. Blog System
-*   **Goal**: Establish thought leadership and improve SEO.
-*   **Implementation**:
-    *   **MVC**: Created `BlogController` (Frontend & Backend), `Blog` model, and migration.
-    *   **Seeding**: Created `BlogSeeder` to populate the site with 4 initial tech-heavy articles (AI, Web Dev trends) to demonstrate value immediately.
-    *   **Details Page**: Built `blog_details.blade.php` with sidebar navigation and category linking.
-*   **Why**: Static sites die; dynamic content drives traffic and demonstrates expertise.
-
-### C. Subscriber & Newsletter System
-*   **Goal**: Capture leads and build an audience.
-*   **Implementation**:
-    *   **Capture**: Added an AJAX-powered subscription form to the footer (`footer.blade.php`).
-    *   **Storage**: Created `subscribers` table and `Subscriber` model.
-    *   **Welcome Flow**: Immediate transactional email (`WelcomeSubscriber` mailable) sent upon signup.
-    *   **Admin Panel**: Built a Subscriber Management dashboard to view/delete users and send manual newsletters.
-*   **Why**: Email remains the most direct channel for professional communication.
-
-### D. Automated Notification Engine
-*   **Goal**: "Set it and forget it" marketing.
-*   **Implementation**:
-    *   **Triggers**: Hooked into `BlogController@store` and `PortfolioController@store`.
-    *   **Jobs**: Created `NotifySubscribersOfNewBlogPost` and `NotifySubscribersOfNewPortfolio`.
-    *   **Logic**: When a post is saved, the system automatically queues emails to ALL subscribers.
-*   **Why**: Manual newsletters are often forgotten. Automation ensures consistent engagement.
+ডেভেলপমেন্ট রোডম্যাপটি ছিল নিম্নরূপ:
+১.  **পোর্টফোলিও ডিটেইলস:** প্রজেক্ট শোকেসিং আরও বিস্তারিত করা।
+২.  **কন্টেন্ট ইঞ্জিন:** একটি পূর্ণাঙ্গ ব্লগ সিস্টেম তৈরি করা।
+৩.  **অডিয়েন্স রিটেনশন:** সাবস্ক্রিপশন এবং কন্টাক্ট মেকানিজম তৈরি করা।
+৪.  **অটোমেশন:** অডিয়েন্সকে এনগেজড রাখার জন্য অটোমেটেড ইমেইল কমিউনিকেশন।
 
 ---
 
-## 3. Technical Architecture & Execution Flow (The "How")
+## ২. ফিচার ইমপ্লিমেন্টেশন লগ (কি এবং কেন?)
 
-### Architecture Overview
-The system utilizes standard Laravel MVC architecture but leverages **Jobs and Queues** for heavy lifting (emailing).
+### ক. পোর্টফোলিও ম্যানেজমেন্ট সিস্টেম
+*   **লক্ষ্য**: শুধুমাত্র ছবির গ্যালারি থেকে বেরিয়ে এসে বিস্তারিত কেস স্টাডি তৈরি করা।
+*   **বাস্তবায়ন**:
+    *   **ডাটাবেস**: `portfolios` টেবিলে `long_description`, `client`, `project_date`, `technologies`, এবং `url` কলাম যুক্ত করা হয়েছে।
+    *   **ফ্রন্টএন্ড**: প্রজেক্টের বিস্তারিত দেখানোর জন্য `portfolio_details.blade.php` তৈরি করা হয়েছে।
+    *   **ব্যাকএন্ড**: `PortfolioController` আপডেট করা হয়েছে যাতে রিচ টেক্সট এবং নতুন ফিল্ডগুলো সেভ করা যায়।
+*   **কেন**: ক্লায়েন্টদের প্রজেক্টের *কনটেক্সট* এবং *টেকনোলজি স্ট্যাক* বোঝা প্রয়োজন, শুধু স্ক্রিনশট দেখা যথেষ্ট নয়।
 
-**Key Components:**
-*   **Controllers**: Handle user input and return views/JSON.
-*   **Mailables**: Define the email content (Blade templates).
-*   **Jobs**: Encapsulate the task of sending emails to decouple it from the user request.
+### খ. ব্লগ সিস্টেম
+*   **লক্ষ্য**: নিজের দক্ষতা প্রমাণ করা এবং এসইও (SEO) ইম্প্রুভ করা।
+*   **বাস্তবায়ন**:
+    *   **MVC**: `BlogController` (ফ্রন্টএন্ড এবং ব্যাকএন্ড), `Blog` মডেল এবং মাইগ্রেশন তৈরি করা হয়েছে।
+    *   **সিডিং (Seeding)**: সাইটটি যাতে একদম খালি না থাকে, তাই `BlogSeeder` এর মাধ্যমে ৪টি টেক-রিলেটেড আর্টিকেল (AI, Web Dev) যুক্ত করা হয়েছে।
+    *   **ডিটেইলস পেজ**: `blog_details.blade.php` তৈরি করা হয়েছে যেখানে সাইডবার নেভিগেশন এবং ক্যাটাগরি লিঙ্ক রয়েছে।
+*   **কেন**: স্ট্যাটিক সাইট দ্রুত হারিয়ে যায়; ডাইনামিক কন্টেন্ট ট্রাফিক বাড়ায় এবং আপনার দক্ষতা প্রমাণ করে।
 
-### Execution Flow: New Blog Post Notification
-This describes exactly how the code executes when an Admin creates a blog post.
+### গ. সাবস্ক্রাইবার এবং নিউজলেটার সিস্টেম
+*   **লক্ষ্য**: ভিজিটরদের লিড হিসেবে ক্যাপচার করা এবং অডিয়েন্স তৈরি করা।
+*   **বাস্তবায়ন**:
+    *   **ক্যাপচার**: ফুটারে (`footer.blade.php`) AJAX-পাওয়ারড সাবস্ক্রিপশন ফর্ম যুক্ত করা হয়েছে।
+    *   **স্টোরেজ**: `subscribers` টেবিল এবং `Subscriber` মডেল তৈরি করা হয়েছে।
+    *   **ওয়েলকাম ফ্লো**: সাইন-আপ করার সাথে সাথেই একটি অটোমেটেড ওয়েলকাম ইমেইল (`WelcomeSubscriber` mailable) পাঠানোর ব্যবস্থা করা হয়েছে।
+    *   **অ্যাডমিন প্যানেল**: সাবস্ক্রাইবার ম্যানেজমেন্ট ড্যাশবোর্ড তৈরি করা হয়েছে যেখানে ইউজার দেখা/ডিলিট করা এবং ম্যানুয়াল নিউজলেটার পাঠানো যায়।
+*   **কেন**: প্রফেশনাল কমিউনিকেশনের জন্য ইমেইল এখনও সবচেয়ে কার্যকরী মাধ্যম।
 
-1.  **User Action**: Admin fills out the "Create Blog" form and clicks "Save".
-2.  **Controller**: `App\Http\Controllers\BlogController@store` receives the request.
-    *   Validates input.
-    *   Saves the `Blog` model to the database.
-    *   Handles file uploads (thumbnails).
-3.  **Dispatch**: The controller executes:
+### ঘ. অটোমেটেড নোটিফিকেশন ইঞ্জিন
+*   **লক্ষ্য**: "সেট ইট অ্যান্ড ফরগেট ইট" মার্কেটিং।
+*   **বাস্তবায়ন**:
+    *   **ট্রিগার**: `BlogController@store` এবং `PortfolioController@store` মেথডে হুক বসানো হয়েছে।
+    *   **জব (Jobs)**: `NotifySubscribersOfNewBlogPost` এবং `NotifySubscribersOfNewPortfolio` জব তৈরি করা হয়েছে।
+    *   **লজিক**: যখনই নতুন কোনো পোস্ট সেভ করা হয়, সিস্টেম অটোমেটিক্যালি সব সাবস্ক্রাইবারকে ইমেইল পাঠানোর জন্য কিউ (Queue) তে পাঠিয়ে দেয়।
+*   **কেন**: ম্যানুয়ালি নিউজলেটার পাঠানো প্রায়ই ভুলে যাওয়া হয়। অটোমেশন নিশ্চিত করে যে আপনার অডিয়েন্স সবসময় আপডেট পাচ্ছে।
+
+---
+
+## ৩. টেকনিক্যাল আর্কিটেকচার (কিভাবে কাজ করে?)
+
+### আর্কিটেকচার ওভারভিউ
+সিস্টেমটি স্ট্যান্ডার্ড লারাভেল MVC আর্কিটেকচার ব্যবহার করে, কিন্তু ভারী কাজ (যেমন ইমেইল পাঠানো) করার জন্য **Jobs এবং Queues** ব্যবহার করা হয়েছে।
+
+**মূল কম্পোনেন্টসমূহ:**
+*   **Controllers**: ইউজারের ইনপুট নেয় এবং ভিউ/JSON রিটার্ন করে।
+*   **Mailables**: ইমেইলের কন্টেন্ট ডিজাইন করে (Blade templates)।
+*   **Jobs**: ইমেইল পাঠানোর কাজটিকে ইউজারের রিকোয়েস্ট থেকে আলাদা করে ব্যাকগ্রাউন্ডে প্রসেস করে।
+
+### এক্সিকিউশন ফ্লো: নতুন ব্লগ পোস্ট নোটিফিকেশন
+একজন অ্যাডমিন যখন ব্লগ পোস্ট করেন তখন কোডটি যেভাবে কাজ করে:
+
+১.  **ইউজার অ্যাকশন**: অ্যাডমিন "Create Blog" ফর্ম পূরণ করে "Save" এ ক্লিক করেন।
+২.  **কন্ট্রোলার**: `App\Http\Controllers\BlogController@store` রিকোয়েস্টটি রিসিভ করে।
+    *   ইনপুট ভ্যালিডেট করে।
+    *   ডাটাবেসে `Blog` মডেল সেভ করে।
+    *   ফাইল আপলোড (থাম্বনেইল) হ্যান্ডেল করে।
+৩.  **ডিসপ্যাচ (Dispatch)**: কন্ট্রোলার নিচের কোডটি রান করে:
     ```php
     dispatch(new NotifySubscribersOfNewBlogPost($blog));
     ```
-    *   This pushes a task payload onto the database queue (`jobs` table).
-    *   The controller *immediately* returns a success response to the Admin browser. **The Admin does not wait for emails to send.**
-4.  **Queue Worker**: A background process (running `php artisan queue:work`) picks up the job.
-5.  **Job Execution**: `App\Jobs\NotifySubscribersOfNewBlogPost@handle` runs:
-    *   Retrieves all subscribers: `Subscriber::all()`.
-    *   Loops through them.
-    *   Sends `NewBlogPostMail` to each email address.
-6.  **Result**: Subscribers receive an email with the new post's title, image, and link.
+    *   এটি ডাটাবেস কিউতে (`jobs` টেবিল) একটি টাস্ক পাঠিয়ে দেয়।
+    *   কন্ট্রোলার *সাথে সাথেই* অ্যাডমিনকে সাকসেস মেসেজ দেখায়। **অ্যাডমিনকে ইমেইল পাঠানো শেষ হওয়া পর্যন্ত অপেক্ষা করতে হয় না।**
+৪.  **কিউ ওয়ার্কার**: ব্যাকগ্রাউন্ড প্রসেস (`php artisan queue:work`) জবটি পিক করে।
+৫.  **জব এক্সিকিউশন**: `App\Jobs\NotifySubscribersOfNewBlogPost@handle` রান হয়:
+    *   সব সাবস্ক্রাইবারকে খুঁজে বের করে: `Subscriber::all()`।
+    *   লুপ চালায়।
+    *   প্রত্যেককে `NewBlogPostMail` সেন্ড করে।
+৬.  **ফলাফল**: সাবস্ক্রাইবাররা নতুন পোস্টের টাইটেল, ছবি এবং লিঙ্কসহ ইমেইল পায়।
 
 ---
 
-## 4. File Structure Highlights
+## ৪. ফাইলের গঠন
 
-### Backend Logic
-*   `app/Http/Controllers/Backend/SubscriberController.php`: Admin newsletter logic.
-*   `app/Http/Controllers/Backend/PortfolioContorller.php`: Portfolio logic + Job Trigger.
-*   `app/Http/Controllers/BlogController.php`: Blog logic + Job Trigger.
+### ব্যাকএন্ড লজিক
+*   `app/Http/Controllers/Backend/SubscriberController.php`: অ্যাডমিন নিউজলেটার লজিক।
+*   `app/Http/Controllers/Backend/PortfolioContorller.php`: পোর্টফোলিও লজিক + জব ট্রিগার।
+*   `app/Http/Controllers/BlogController.php`: ব্লগ লজিক + জব ট্রিগার।
 
-### Queue & Jobs
-*   `app/Jobs/SendNewsletterJob.php`: Handles manual newsletter sending.
-*   `app/Jobs/NotifySubscribersOfNewBlogPost.php`: Auto-trigger for blogs.
-*   `app/Jobs/NotifySubscribersOfNewPortfolio.php`: Auto-trigger for portfolios.
+### কিউ এবং জবস (Queue & Jobs)
+*   `app/Jobs/SendNewsletterJob.php`: ম্যানুয়াল নিউজলেটার পাঠানোর জন্য।
+*   `app/Jobs/NotifySubscribersOfNewBlogPost.php`: ব্লগের জন্য অটো-ট্রিগার।
+*   `app/Jobs/NotifySubscribersOfNewPortfolio.php`: পোর্টফোলিওর জন্য অটো-ট্রিগার।
 
-### Mail Templates
+### মেইল টেম্পলেট
 *   `resources/views/mail/newsletter.blade.php`
 *   `resources/views/mail/new_blog_post.blade.php`
 *   `resources/views/mail/new_portfolio.blade.php`
@@ -108,41 +108,41 @@ This describes exactly how the code executes when an Admin creates a blog post.
 
 ---
 
-## 5. Developer Guide: Running the System
+## ৫. ডেভেলপার গাইড (সিস্টেম চালানোর নিয়ম)
 
-### Prerequisites
+### প্রয়োজনীয় টুলস (Prerequisites)
 *   PHP 8.2+
 *   Composer
 *   MySQL
-*   SMTP Server (e.g., Mailtrap, Gmail, or hosting provider) configured in `.env`.
+*   SMTP Server (যেমন: Mailtrap, Gmail, অথবা হোস্টিং প্রোভাইডার) `.env` ফাইলে কনফিগার করা থাকতে হবে।
 
-### Setup
-1.  **Install Dependencies**:
+### সেটআপ
+১.  **ডিপেন্ডেন্সি ইনস্টল**:
     ```bash
     composer install
     npm install && npm run build
     ```
-2.  **Database**:
+২.  **ডাটাবেস**:
     ```bash
     php artisan migrate
     php artisan db:seed --class=BlogSeeder
     ```
 
-### Running the Queue (CRITICAL)
-Because emails are queued, they will **NOT** be sent unless the queue worker is running.
+### কিউ চালানো (খুবই গুরুত্বপূর্ণ)
+যেহেতু ইমেইলগুলো কিউ (Queue) এর মাধ্যমে পাঠানো হয়, তাই কিউ ওয়ার্কার চালু না থাকলে ইমেইল **যাবে না**।
 
-**Local Development**:
-Open a separate terminal and run:
+**লোকাল ডেভেলপমেন্ট**:
+একটি আলাদা টার্মিনালে নিচের কমান্ডটি রান করে রাখুন:
 ```bash
 php artisan queue:work
 ```
 
-**Production**:
-Set up **Supervisor** to keep `php artisan queue:work` running in the background.
+**প্রোডাকশন**:
+সার্ভারে **Supervisor** সেটআপ করতে হবে যাতে `php artisan queue:work` সবসময় ব্যাকগ্রাউন্ডে চলতে থাকে।
 
 ---
 
-## 6. Future Improvements (To-Do)
-*   **Unsubscribe Link**: Add a generated link in emails to allow users to opt-out (`is_active` flag in DB).
-*   **Queue Batching**: For 1000+ subscribers, implement `Bus::batch` or chunking to avoid timeouts.
-*   **Email Logs**: A UI to see history of sent newsletters.
+## ৬. ভবিষ্যৎ পরিকল্পনা (To-Do)
+*   **আনসাবস্ক্রাইব লিঙ্ক**: ইমেইলে একটি লিঙ্ক দেওয়া যাতে ইউজার চাইলে আনসাবস্ক্রাইব করতে পারে (DB তে `is_active` ফ্ল্যাগ ব্যবহার করে)।
+*   **কিউ ব্যাচিং (Batching)**: ১০০০+ সাবস্ক্রাইবার হয়ে গেলে `Bus::batch` অথবা চাঙ্কিং (chunking) ব্যবহার করা যাতে টাইমআউট না হয়।
+*   **ইমেইল লগ**: পাঠানো নিউজলেটারগুলোর হিস্ট্রি দেখার জন্য একটি ইউজার ইন্টারফেস (UI) তৈরি করা।
