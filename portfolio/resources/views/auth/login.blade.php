@@ -125,6 +125,18 @@
                                                     autocomplete="current-password" placeholder="Password"
                                                     name="password">
                                             </div>
+
+                                            @if(isset($captcha_question))
+                                            <div class="mb-3">
+                                                <label for="captcha" class="form-label">Captcha: {{ $captcha_question }} = ?</label>
+                                                <input type="number" class="form-control" id="captcha"
+                                                    placeholder="Enter answer" name="captcha" required>
+                                                @error('captcha')
+                                                    <span class="text-danger small">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            @endif
+
                                             <div class="form-check mb-3">
                                                 <input type="checkbox" class="form-check-input" id="authCheck">
                                                 <label class="form-check-label" for="authCheck">

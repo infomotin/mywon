@@ -117,6 +117,12 @@
                     <span class="link-title">Queue Manager</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('security.setting') }}" class="nav-link">
+                    <i class="link-icon" data-feather="shield"></i>
+                    <span class="link-title">Security Manager</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

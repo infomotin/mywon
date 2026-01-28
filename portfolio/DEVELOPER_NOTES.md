@@ -185,6 +185,20 @@ php artisan queue:work
     $failedJobs = DB::table('failed_jobs')->latest('failed_at')->get();
     ```
 
+### ২০২৬-০১-২৮: সিকিউরিটি ম্যানেজার ইমপ্লিমেন্টেশন
+*   **Event/Prompt**: অ্যাডমিন ড্যাশবোর্ডে একটি Security Section তৈরি করা, যেখান থেকে Login Page Captcha, Brute Force Attack Prevention, User Login Log এবং 3D Verification Email (2FA) ম্যানেজ করা যাবে।
+*   **Plan**: `SecuritySetting` এবং `LoginLog` model তৈরি করা, `SecurityController` দিয়ে settings update করা, এবং Authentication flow-তে captcha, logging এবং 2FA check যুক্ত করা।
+*   **Executing**: Migration run করা, Model ও Controller তৈরি করা, Middleware add করা এবং Login logic update করা।
+*   **Work**:
+    *   Security Manager Dashboard তৈরি করা হয়েছে (Captcha, Brute Force, Logs, 2FA enable/disable options সহ)।
+    *   Login Page-এ Captcha integration করা হয়েছে।
+    *   Brute Force logging limit control করা হয়েছে (3 vs 5 attempts)।
+    *   Login successful হলে User Agent ও IP log করার ব্যবস্থা করা হয়েছে।
+    *   2FA (Email Verification) system তৈরি করা হয়েছে যা login-এর পর OTP চায়।
+*   **Change**:
+    *   **Created**: `SecuritySetting`, `LoginLog` Models, `SecurityController`, `TwoFactorController`, `TwoFactorMiddleware`, Views (`admin/security/index`, `auth/two_factor`, `emails/two_factor_code`).
+    *   **Modified**: `web.php`, `AuthenticatedSessionController`, `LoginRequest`, `login.blade.php`, `bootstrap/app.php` (middleware alias).
+
 ---
 
 ## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)

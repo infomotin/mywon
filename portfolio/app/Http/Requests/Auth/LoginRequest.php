@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\SecuritySetting;
 
 class LoginRequest extends FormRequest
 {
@@ -41,6 +42,16 @@ class LoginRequest extends FormRequest
      */
     public function authenticate(): void
     {
+        // Captcha Check
+        $setting = SecuritySetting::firstOrCreateSettings();
+        if ($setting->captcha_enabled) {
+            if ($this->input('captcha') != session('captcha_answer')) {
+                throw ValidationException::withMessages([
+                    'captcha' => 'Incorrect captcha answer.',
+                ]);
+            }
+        }
+
         $this->ensureIsNotRateLimited();
         // Check if the login is an email or username or phone number
         $user = User::where('email', $this->input('login'))
@@ -76,7 +87,10 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        $setting = SecuritySetting::firstOrCreateSettings();
+        $limit = $setting->brute_force_enabled ? 3 : 5;
+
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), $limit)) {
             return;
         }
 

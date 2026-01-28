@@ -42,7 +42,12 @@ Route::get('/unsubscribe/{email}/{token}', [SubscriberController::class, 'unsubs
 
 Route::get('/dashboard', function () {
     return view('/backend/admin/index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'twofactor'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('2fa', [App\Http\Controllers\TwoFactorController::class, 'index'])->name('2fa.index');
+    Route::post('2fa', [App\Http\Controllers\TwoFactorController::class, 'store'])->name('2fa.store');
+});
 
 //admin logout
 // Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
@@ -244,3 +249,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/queue/delete-all-failed', 'deleteAllFailed')->name('queue.delete.all.failed');
     });
 });
+
+//Security Management
+Route::middleware('auth')->group(function () {
+    Route::controller(App\Http\Controllers\Backend\SecurityController::class)->group(function () {
+        Route::get('/security/setting', 'index')->name('security.setting');
+        Route::post('/security/update', 'update')->name('security.update');
+    });
+});
+
+require __DIR__.'/auth.php';
