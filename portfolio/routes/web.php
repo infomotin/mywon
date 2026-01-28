@@ -25,6 +25,7 @@ use App\Http\Controllers\Frontend\PortfolioController as FrontendPortfolioContro
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\Backend\SubscriberController as BackendSubscriberController;
+use App\Http\Controllers\Backend\QueueController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::get('/portfolio/{id}', [FrontendPortfolioController::class, 'details'])->name('portfolio.details');
@@ -229,5 +230,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/subscribers/delete/{id}', 'destroy')->name('subscriber.delete');
         Route::get('/subscribers/newsletter', 'newsletter')->name('subscriber.newsletter');
         Route::post('/subscribers/send-newsletter', 'sendNewsletter')->name('subscriber.send');
+    });
+});
+
+//Queue Management
+Route::middleware('auth')->group(function () {
+    Route::controller(QueueController::class)->group(function () {
+        Route::get('/queue', 'index')->name('queue.index');
+        Route::post('/queue/start', 'startWorker')->name('queue.start');
+        Route::post('/queue/stop', 'stopWorker')->name('queue.stop');
+        Route::post('/queue/retry/{id}', 'retryJob')->name('queue.retry');
+        Route::delete('/queue/delete/{id}', 'deleteJob')->name('queue.delete');
+        Route::delete('/queue/delete-all-failed', 'deleteAllFailed')->name('queue.delete.all.failed');
     });
 });

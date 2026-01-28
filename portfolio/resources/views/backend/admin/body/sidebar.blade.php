@@ -110,6 +110,13 @@
                     <span class="link-title">Subscribers</span>
                 </a>
             </li>
+            <li class="nav-item nav-category">System</li>
+            <li class="nav-item">
+                <a href="{{ route('queue.index') }}" class="nav-link">
+                    <i class="link-icon" data-feather="server"></i>
+                    <span class="link-title">Queue Manager</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
