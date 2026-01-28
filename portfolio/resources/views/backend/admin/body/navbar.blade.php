@@ -43,28 +43,21 @@
                         <a href="javascript:;" class="text-muted">Edit</a>
                     </div>
                     <div class="row g-0 p-1">
-                        <div class="col-3 text-center">
-                            <a href="{{ asset('Backend/pages/apps/chat.html') }}"
+                        <div class="col-4 text-center">
+                            <a href="{{ route('admin.chat.inbox') }}"
                                 class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i
                                     data-feather="message-square" class="icon-lg mb-1"></i>
                                 <p class="tx-12">Chat</p>
                             </a>
                         </div>
-                        <div class="col-3 text-center">
-                            <a href="{{ asset('Backend/pages/apps/calendar.html') }}"
-                                class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i
-                                    data-feather="calendar" class="icon-lg mb-1"></i>
-                                <p class="tx-12">Calendar</p>
-                            </a>
-                        </div>
-                        <div class="col-3 text-center">
-                            <a href="{{ asset('Backend/pages/email/inbox.html') }}"
+                        <div class="col-4 text-center">
+                            <a href="{{ route('contact.index') }}"
                                 class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i
                                     data-feather="mail" class="icon-lg mb-1"></i>
                                 <p class="tx-12">Email</p>
                             </a>
                         </div>
-                        <div class="col-3 text-center">
+                        <div class="col-4 text-center">
                             <a href="{{ route('admin.edit.profile') }}"
                                 class="dropdown-item d-flex flex-column align-items-center justify-content-center wd-70 ht-70"><i
                                     data-feather="instagram" class="icon-lg mb-1"></i>
