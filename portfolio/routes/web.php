@@ -15,6 +15,7 @@ use App\Http\Controllers\frontend\FrontEndController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PersonalDataController;
+use App\Http\Controllers\Backend\SettingController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::post('/submit', [ContactController::class, 'submit'])->name('contact.submit');
@@ -107,7 +108,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-// MySkillContorller
+//MySkillContorller
 Route::middleware('auth')->group(function () {
     Route::controller(MySkillContorller::class)->group(function () {
         Route::get('/myskill', 'index')->name('myskill.index');
@@ -119,7 +120,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-// TestimonialContorller
+//TestimonialContorller
 Route::middleware('auth')->group(function () {
     Route::controller(TestimonialContorller::class)->group(function () {
         Route::get('/testimonial', 'index')->name('testimonial.index');
@@ -131,6 +132,18 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+//PersonalDataController
+Route::middleware('auth')->group(function () {
+    Route::controller(PersonalDataController::class)->group(function () {
+        Route::get('/personaldata', 'index')->name('personaldata.index');
+        Route::get('/personaldata/create', 'create')->name('personaldata.create');
+        Route::post('/personaldata/store', 'store')->name('personaldata.store');
+        Route::get('/personaldata/edit/{id}', 'edit')->name('personaldata.edit');
+        Route::post('/personaldata/update/{id}', 'update')->name('personaldata.update');
+        // Route::delete('/personaldata/destroy/{id}', 'destroy')->name('personaldata.destroy');
+    });
+});
+
 //BlogController
 Route::middleware('auth')->group(function () {
     Route::controller(BlogController::class)->group(function () {
@@ -139,36 +152,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/blog/store', 'store')->name('blog.store');
         Route::get('/blog/edit/{id}', 'edit')->name('blog.edit');
         Route::post('/blog/update/{id}', 'update')->name('blog.update');
-        Route::delete('/blog/destroy/{id}', 'destroy')->name('blog.destroy');
+        Route::get('/blog/delete/{id}', 'destroy')->name('blog.delete');
     });
 });
+
 //ContactController
 Route::middleware('auth')->group(function () {
     Route::controller(ContactController::class)->group(function () {
         Route::get('/contact', 'index')->name('contact.index');
-        Route::post('/contact/reply/{id}', 'reply')->name('contact.reply');
-    });
-});
-//PersonalDataController
-Route::middleware('auth')->group(function () {
-    Route::controller(PersonalDataController::class)->group(function () {
-        Route::get('/personal-data', 'index')->name('personal-data.index');
-        // Route::get('/personal-data/create', 'create')->name('personal-data.create');
-        // Route::post('/personal-data/store', 'store')->name('personal-data.store');
-        // Route::get('/personal-data/edit/{id}', 'edit')->name('personal-data.edit');
-        // Route::post('/personal-data/update/{id}', 'update')->name('personal-data.update');
-        // Route::delete('/personal-data/destroy/{id}', 'destroy')->name('personal-data.destroy');
+        Route::get('/contact/delete/{id}', 'destroy')->name('contact.delete');
     });
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-use App\Http\Controllers\Backend\SettingController;
-
+//SettingController
 Route::middleware('auth')->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::get('/setting', 'index')->name('setting.index');
@@ -176,4 +172,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
