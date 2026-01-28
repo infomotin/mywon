@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Str;
+use App\Jobs\NotifySubscribersOfNewBlogPost;
 
 class BlogController extends Controller
 {
@@ -66,6 +67,10 @@ class BlogController extends Controller
         }
         $blog->content = $request->content;
         $blog->save();
+        
+        // Dispatch job to send email notification to subscribers
+        dispatch(new NotifySubscribersOfNewBlogPost($blog));
+
         //notification
         $blog->tags()->attach($request->tags);
         return redirect()->route('blog.index')->with('success', 'Blog created successfully');

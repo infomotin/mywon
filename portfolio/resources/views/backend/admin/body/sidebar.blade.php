@@ -98,6 +98,12 @@
                     <span class="link-title">Chat Inbox</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('subscriber.index') }}" class="nav-link">
+                    <i class="link-icon" data-feather="users"></i>
+                    <span class="link-title">Subscribers</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

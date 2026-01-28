@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\ChatController as BackendChatController;
 use App\Http\Controllers\Frontend\PortfolioController as FrontendPortfolioController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\Backend\SubscriberController as BackendSubscriberController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 Route::get('/portfolio/{id}', [FrontendPortfolioController::class, 'details'])->name('portfolio.details');
@@ -178,6 +179,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(ContactController::class)->group(function () {
         Route::get('/contact', 'index')->name('contact.index');
         Route::get('/contact/delete/{id}', 'destroy')->name('contact.delete');
+        Route::post('/contact/reply/{id}', 'reply')->name('contact.reply');
     });
 });
 
@@ -208,4 +210,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/chat/inbox', [BackendChatController::class, 'index'])->name('admin.chat.inbox');
     Route::get('/admin/chat/get-messages/{sessionId}', [BackendChatController::class, 'getMessages']);
     Route::post('/admin/chat/reply', [BackendChatController::class, 'reply']);
+});
+
+//SubscriberController
+Route::middleware('auth')->group(function () {
+    Route::controller(BackendSubscriberController::class)->group(function () {
+        Route::get('/subscribers', 'index')->name('subscriber.index');
+        Route::get('/subscribers/delete/{id}', 'destroy')->name('subscriber.delete');
+        Route::get('/subscribers/newsletter', 'newsletter')->name('subscriber.newsletter');
+        Route::post('/subscribers/send-newsletter', 'sendNewsletter')->name('subscriber.send');
+    });
 });

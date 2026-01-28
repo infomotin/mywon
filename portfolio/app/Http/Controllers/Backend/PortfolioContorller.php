@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Portfolio;
 use App\Models\Services;
+use App\Jobs\NotifySubscribersOfNewPortfolio;
 
 class PortfolioContorller extends Controller
 {
@@ -54,6 +55,9 @@ class PortfolioContorller extends Controller
         $portfolio->services_cat_id = $request->services_cat_id;
         $portfolio->url = $request->url;
         $portfolio->save();
+
+        // Dispatch job to send email notification to subscribers
+        dispatch(new NotifySubscribersOfNewPortfolio($portfolio));
 
         return redirect()->route('portfolio.index')->with('success', 'Portfolio created successfully');
     }
