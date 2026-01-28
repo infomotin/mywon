@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             $smtpsetting = SmtpSetting::first();
             if ($smtpsetting) {
                 $data = [
-                    'driver' => $smtpsetting->mailer,
+                    'transport' => $smtpsetting->mailer,
                     'host' => $smtpsetting->host,
                     'port' => $smtpsetting->port,
                     'username' => $smtpsetting->username,

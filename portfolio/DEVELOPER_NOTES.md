@@ -199,6 +199,13 @@ php artisan queue:work
     *   **Created**: `SecuritySetting`, `LoginLog` Models, `SecurityController`, `TwoFactorController`, `TwoFactorMiddleware`, Views (`admin/security/index`, `auth/two_factor`, `emails/two_factor_code`).
     *   **Modified**: `web.php`, `AuthenticatedSessionController`, `LoginRequest`, `login.blade.php`, `bootstrap/app.php` (middleware alias).
 
+### ২০২৬-০১-২৮: SMTP কনফিগারেশন বাগ ফিক্স
+*   **Event/Prompt**: "Email Not Send On 3d Virification" - ব্যবহারকারী রিপোর্ট করেছেন যে 3D ভেরিফিকেশন ইমেইল যাচ্ছে না।
+*   **Plan**: `AppServiceProvider` এবং `AuthenticatedSessionController` ডিবাগ করা।
+*   **Executing**: `TestSmtp` কমান্ড তৈরি করে মেইল কনফিগারেশন টেস্ট করা।
+*   **Work**: দেখা গেছে `AppServiceProvider`-এ `Config::set('mail.mailers.smtp', ...)` কনফিগারেশনে `driver` কি (key) ব্যবহার করা হচ্ছিল, কিন্তু লারাভেল `transport` কি (key) আশা করে।
+*   **Change**: `AppServiceProvider.php`-এ `driver` পরিবর্তন করে `transport` করা হয়েছে। এখন ইমেইল সঠিকভাবে সেন্ড হচ্ছে।
+
 ---
 
 ## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)
