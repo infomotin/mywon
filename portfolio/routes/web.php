@@ -167,6 +167,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/blog/edit/{id}', 'edit')->name('blog.edit');
         Route::post('/blog/update/{id}', 'update')->name('blog.update');
         Route::get('/blog/delete/{id}', 'destroy')->name('blog.delete');
+        Route::post('/blog/upload-image', 'uploadImage')->name('blog.upload.image');
     });
 });
 

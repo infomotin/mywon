@@ -1,6 +1,47 @@
 @extends('backend.admin.dashboard')
 
 @section('content')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('Backend/assets/vendors/tinymce/tinymce.min.js') }}"></script>
+    <script>
+        tinymce.init({
+            selector: '#tinymceExample',
+            height: 400,
+            theme: 'silver',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table directionality',
+                'emoticons template paste textpattern help'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',
+            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+            image_title: true,
+            automatic_uploads: true,
+            file_picker_types: 'image',
+            images_upload_url: "{{ route('blog.upload.image') }}",
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function () {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            }
+        });
+    </script>
+
     <div class="page-content">
         <section class="section">
             <div class="card">
@@ -54,7 +95,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Content</label>
-                            <textarea class="form-control" name="content" rows="5">{{ $blog->content }}</textarea>
+                            <textarea class="form-control" name="content" id="tinymceExample" rows="5">{{ $blog->content }}</textarea>
                         </div>
 
                         <div class="mb-3">

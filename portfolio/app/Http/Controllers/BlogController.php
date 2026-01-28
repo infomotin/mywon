@@ -133,4 +133,15 @@ class BlogController extends Controller
         $blog->delete();
         return redirect()->route('blog.index')->with('success', 'Blog deleted successfully');
     }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/posts/content', $filename);
+            return response()->json(['location' => asset('upload/posts/content/' . $filename)]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
 }

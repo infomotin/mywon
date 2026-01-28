@@ -38,7 +38,7 @@
                             <h2 class="title mb-4" style="font-size: 32px; font-weight: 700;">{{ $blog->title }}</h2>
                             
                             <div class="description" style="line-height: 1.8; color: var(--tj-body);">
-                                {!! nl2br(e($blog->content)) !!}
+                                {!! $blog->content !!}
                             </div>
 
                             <!-- Tags -->
