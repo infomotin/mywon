@@ -297,6 +297,7 @@ a h6:hover {
 }
 .tj-btn-secondary:hover {
 	background: var(--tj-theme-primary);
+	color: var(--tj-white);
 }
 .tj-btn-primary-2 {
 	display: flex;
@@ -342,6 +343,7 @@ a h6:hover {
 }
 .lead {
 	font-size: 20px;
+	color: var(--tj-white);
 }
 .social-icons {
 	display: -webkit-box;
@@ -397,10 +399,20 @@ a h6:hover {
 	transform: scale(1.1);
 }
 .funfact-item {
-	gap: 15px;
+	gap: 20px;
+	padding: 25px 20px;
+	background: var(--tj-bg-2);
+	border: 1px solid var(--tj-border);
+	border-radius: 15px;
+	transition: all 0.3s ease-in-out;
+}
+.funfact-item:hover {
+	transform: translateY(-5px);
+	border-color: var(--tj-theme-primary);
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 .funfact-item .number {
-	font-size: 64px;
+	font-size: 50px;
 	line-height: 1;
 	font-weight: var(--tj-fw-bold);
 	display: -webkit-box;
@@ -411,6 +423,21 @@ a h6:hover {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
+	color: var(--tj-theme-primary);
+	background: -webkit-linear-gradient(
+		0deg,
+		var(--tj-theme-primary) 0%,
+		var(--tj-theme-secondary) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.funfact-item .text {
+	font-size: 16px;
+	line-height: 1.5;
+	color: var(--tj-grey-1);
+	text-transform: uppercase;
+	font-weight: var(--tj-fw-medium);
 }
 .section-header {
 	margin-bottom: 50px;
@@ -1032,6 +1059,10 @@ body.loaded {
 	font-weight: var(--tj-fw-bold);
 	display: block;
 	margin-bottom: 10px;
+	color: var(--tj-white);
+}
+.hero-sub-title .hero-name {
+	color: var(--tj-white);
 }
 
 .hero-title {
@@ -3074,6 +3105,39 @@ blockquote cite::before {
 }
 .copy-text p > a:hover {
 	color: var(--tj-theme-primary);
+}
+
+.footer-subscribe {
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+.footer-subscribe-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--tj-white);
+    margin-bottom: 20px;
+}
+.footer-subscribe .subscribe-form .input-group {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.footer-subscribe .subscribe-form input {
+    background: var(--tj-theme-accent-2);
+    border: 1px solid var(--tj-border);
+    color: var(--tj-white);
+    padding: 15px 20px;
+    border-radius: 5px 0 0 5px;
+    height: 50px;
+    width: 100%;
+}
+.footer-subscribe .subscribe-form input::placeholder {
+    color: var(--tj-grey-1);
+}
+.footer-subscribe .subscribe-form button {
+    border-radius: 0 5px 5px 0;
+    height: 50px;
 }
 /* END: Footer Area */
 

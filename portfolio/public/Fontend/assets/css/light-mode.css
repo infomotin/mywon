@@ -40,8 +40,14 @@ body.light-mode {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
+.light-mode .section-header.style-2 .sub-title {
+	color: var(--tj-grey-1);
+}
 .light-mode .owl-dots .owl-dot span {
 	opacity: 1;
+}
+.light-mode .lead {
+	color: var(--tj-theme-secondary);
 }
 /* END: Theme Default CSS */
 
@@ -94,6 +100,21 @@ body.light-mode {
 }
 .light-mode .hero-sub-title {
 	color: var(--tj-theme-secondary);
+}
+.light-mode .hero-name {
+	color: var(--tj-theme-secondary);
+}
+.light-mode .funfact-item {
+	background: var(--tj-off-white);
+	border-color: var(--tj-grey-2);
+}
+.light-mode .funfact-item:hover {
+	border-color: var(--tj-theme-primary);
+	background: var(--tj-white);
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+.light-mode .funfact-item .text {
+	color: var(--tj-black3);
 }
 .light-mode .hero-title,
 .light-mode .about-area .about-left-content .title {
@@ -343,6 +364,9 @@ body.light-mode {
 */
 .light-mode .tj-footer-area {
 	background: var(--tj-theme-secondary);
+}
+.light-mode .footer-subscribe-title {
+	color: var(--tj-white);
 }
 /* END: Footer Area */
 

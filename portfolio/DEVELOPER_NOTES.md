@@ -189,100 +189,52 @@ php artisan queue:work
 *   **Event/Prompt**: অ্যাডমিন ড্যাশবোর্ডে একটি Security Section তৈরি করা, যেখান থেকে Login Page Captcha, Brute Force Attack Prevention, User Login Log এবং 3D Verification Email (2FA) ম্যানেজ করা যাবে।
 *   **Plan**: `SecuritySetting` এবং `LoginLog` model তৈরি করা, `SecurityController` দিয়ে settings update করা, এবং Authentication flow-তে captcha, logging এবং 2FA check যুক্ত করা।
 *   **Executing**: Migration run করা, Model ও Controller তৈরি করা, Middleware add করা এবং Login logic update করা।
-*   **Work**: `SecuritySetting` মডেল তৈরি করে সেটিংস ম্যানেজ করা হয়েছে। `LoginLog` মডেল দিয়ে লগিন হিস্ট্রি রাখা হচ্ছে। `AuthenticatedSessionController` এবং `LoginRequest`-এ 2FA এবং Captcha লজিক ইন্টিগ্রেট করা হয়েছে।
-    *   Security Manager Dashboard তৈরি করা হয়েছে (Captcha, Brute Force, Logs, 2FA enable/disable options সহ)।
-    *   Login Page-এ Captcha integration করা হয়েছে।
-    *   Brute Force logging limit control করা হয়েছে (3 vs 5 attempts)।
-    *   Login successful হলে User Agent ও IP log করার ব্যবস্থা করা হয়েছে।
-    *   2FA (Email Verification) system তৈরি করা হয়েছে যা login-এর পর OTP চায়।
-*   **Change**:
-    *   **Created**: `SecuritySetting`, `LoginLog` Models, `SecurityController`, `TwoFactorController`, `TwoFactorMiddleware`, Views (`admin/security/index`, `auth/two_factor`, `emails/two_factor_code`).
-    *   **Modified**: `web.php`, `AuthenticatedSessionController`, `LoginRequest`, `login.blade.php`, `bootstrap/app.php` (middleware alias).
-
-### ২০২৬-০১-২৮: SMTP কনফিগারেশন বাগ ফিক্স
-*   **Event/Prompt**: "Email Not Send On 3d Virification" - ব্যবহারকারী রিপোর্ট করেছেন যে 3D ভেরিফিকেশন ইমেইল যাচ্ছে না।
-*   **Plan**: `AppServiceProvider` এবং `AuthenticatedSessionController` ডিবাগ করা।
-*   **Executing**: `TestSmtp` কমান্ড তৈরি করে মেইল কনফিগারেশন টেস্ট করা।
-*   **Work**: দেখা গেছে `AppServiceProvider`-এ `Config::set('mail.mailers.smtp', ...)` কনফিগারেশনে `driver` কি (key) ব্যবহার করা হচ্ছিল, কিন্তু লারাভেল `transport` কি (key) আশা করে।
-*   **Change**: `AppServiceProvider.php`-এ `driver` পরিবর্তন করে `transport` করা হয়েছে। এখন ইমেইল সঠিকভাবে সেন্ড হচ্ছে।
-
-### ২০২৬-০১-২৮: অ্যাডমিন প্রোফাইল আপডেট
-*   **Event/Prompt**: অ্যাডমিন প্রোফাইল পেজে নাম (First/Last), সোশ্যাল লিঙ্কস এবং বায়ো (About) সেকশন যুক্ত করা।
-*   **Plan**: `users` টেবিলে নতুন কলাম যুক্ত করা, `User` মডেল আপডেট করা, এবং `AdminController` ও `editprofile.blade.php` ভিউ আপডেট করা।
-*   **Executing**: `php artisan make:migration add_columns_to_users_table` কমান্ড রান করা এবং মাইগ্রেশন সম্পন্ন করা।
-*   **Work**: `users` টেবিলে `first_name`, `last_name`, `phone`, `address`, `about`, `website` এবং সোশ্যাল লিঙ্ক (`github`, `twitter` etc.) কলাম যুক্ত করা হয়েছে। `User` মডেলে এগুলোকে `fillable` করা হয়েছে। `AdminController`-এ `updateProfile` মেথড আপডেট করে নতুন ডাটা সেভ করার ব্যবস্থা করা হয়েছে এবং ভিউ ফাইলে ইনপুট ফিল্ড ও ডিসপ্লে লজিক বসানো হয়েছে।
-*   **Change**: `users` table migration, `User.php`, `AdminController.php`, `editprofile.blade.php`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ এরর ফিক্স
-*   **Event/Prompt**: `/edit-profile` পেজে এরর আসছিল (undefined property `profile_photo_url`)।
-*   **Plan**: `editprofile.blade.php` ফাইলে `profile_photo_url` এর ব্যবহার চেক করা এবং ফিক্স করা।
-*   **Executing**: ভিউ ফাইলে ইমেজ সোর্স পাথ আপডেট করা।
-*   **Work**: `profile_photo_url` (যা Jetstream এর অংশ) পরিবর্তন করে কাস্টম পাথ লজিক `asset('upload/admin_images/' ...)` বসানো হয়েছে, যা ফাইলের উপরের অংশেও ব্যবহার করা হয়েছে।
-*   **Change**: `editprofile.blade.php`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ diffForHumans এরর ফিক্স
-*   **Event/Prompt**: `/edit-profile` পেজে এরর আসছিল (Call to a member function diffForHumans() on null)।
-*   **Plan**: `editprofile.blade.php` ফাইলে `created_at` null কিনা চেক করা।
-*   **Executing**: `diffForHumans()` কল করার আগে কন্ডিশনাল চেক বসানো।
-*   **Work**: `$admin->created_at` যদি `null` হয় তবে `diffForHumans()` কল না করে 'Unknown' দেখানোর ব্যবস্থা করা হয়েছে।
-*   **Change**: `editprofile.blade.php`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন হেডার মেনু ডায়নামিক ও এরর ফিক্স
-*   **Event/Prompt**: হেডার মেনু (Navbar) প্রোফাইল সেকশনে স্ট্যাটিক ডাটা ছিল এবং ভুল ইমেজ পাথ ছিল।
-*   **Plan**: `navbar.blade.php` ফাইলে `auth()->user()` ব্যবহার করে লগইন করা ইউজারের ডাটা (নাম, ইমেইল, ছবি) ডায়নামিক করা।
-*   **Executing**: হার্ডকোডেড ভ্যালুগুলো রিপ্লেস করা এবং প্রোফাইল লিঙ্ক আপডেট করা।
-*   **Work**: `navbar.blade.php` ফাইলে ইউজারের নাম, ইমেইল এবং প্রোফাইল পিকচার ডায়নামিক করা হয়েছে। প্রোফাইল লিঙ্কটি `admin.edit.profile` রুটে পয়েন্ট করা হয়েছে। Web Apps মেনুর প্রোফাইল লিঙ্কও আপডেট করা হয়েছে।
-*   **Change**: `resources/views/backend/admin/body/navbar.blade.php`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ ফাইল আপলোড ডিজাইন ফিক্স
-*   **Event/Prompt**: `/edit-profile` পেজে ফাইল আপলোড ইনপুট এবং প্রিভিউ এর ডিজাইন ভালো ছিল না।
-*   **Plan**: `editprofile.blade.php` ফাইলে `Dropify` প্লাগিন যুক্ত করা।
-*   **Executing**: Dropify CSS এবং JS যুক্ত করা এবং স্ট্যান্ডার্ড ফাইল ইনপুটকে Dropify দিয়ে রিপ্লেস করা।
-*   **Work**: `dropify` ব্যবহার করে ড্র্যাগ-এন্ড-ড্রপ ইমেজ আপলোড এবং প্রিভিউ ইমপ্লিমেন্ট করা হয়েছে। `data-default-file` এট্রিবিউট ব্যবহার করে বর্তমান প্রোফাইল পিকচার দেখানো হয়েছে।
-*   **Change**: `resources/views/backend/admin/editprofile.blade.php`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন লেআউট ফিক্স (jQuery Conflict & Stacks)
-*   **Event/Prompt**: `/edit-profile` পেজে লেআউট ভেঙ্গে যাচ্ছিল (Not Fix < Bape Contin Wrong Place)।
-*   **Plan**: `dashboard.blade.php` ফাইলে স্টাইল এবং স্ক্রিপ্ট স্ট্যাক (`@stack`) যুক্ত করা এবং `editprofile.blade.php` থেকে ডুপ্লিকেট jQuery CDN রিমুভ করা।
-*   **Executing**: `dashboard.blade.php` তে `@stack('styles')` এবং `@stack('scripts')` যোগ করা হয়েছে। `editprofile.blade.php` তে `@push` ব্যবহার করে Dropify লোড করা হয়েছে এবং jQuery CDN রিমুভ করা হয়েছে।
-*   **Work**: ডুপ্লিকেট jQuery লোডিং এর কারণে টেমপ্লেটের লেআউট স্ক্রিপ্ট কাজ করছিল না। এটি ফিক্স করে সঠিক আর্কিটেকচার ইমপ্লিমেন্ট করা হয়েছে।
-*   **Change**: `resources/views/backend/admin/dashboard.blade.php`, `resources/views/backend/admin/editprofile.blade.php`.
-
----
-
-### ২০২৬-০১-২৮: অ্যাডমিন ফুটার ওভারল্যাপ ফিক্স
-*   **Event/Prompt**: `/edit-profile` পেজে ফুটার কন্টেন্টের সাথে ওভারল্যাপ করছিল।
-*   **Plan**: `style.css` ফাইলে ফুটারের জন্য CSS রুলস চেক করা এবং ফিক্স করা।
-*   **Executing**: `style.css` ফাইলে `.footer` ক্লাসের জন্য `background`, `border-top`, `position: relative` এবং `z-index` প্রপার্টি যুক্ত করা।
-*   **Work**: ফুটারটি আগে ট্রান্সপারেন্ট বা পজিশনিং সমস্যার কারণে কন্টেন্টের উপরে চলে আসছিল। `z-index` এবং ব্যাকগ্রাউন্ড কালার দিয়ে এটি ফিক্স করা হয়েছে যাতে এটি কন্টেন্ট থেকে আলাদা থাকে।
-*   **Change**: `public/Backend/assets/css/demo2/style.css`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ লেআউট ফিক্স (Extra Div Removal)
-*   **Event/Prompt**: `/edit-profile` পেজে ফুটার বাম পাশে এবং ভুল পজিশনে দেখাচ্ছিল।
-*   **Plan**: `editprofile.blade.php` ফাইলের HTML স্ট্রাকচার চেক করা (div balance)।
-*   **Executing**: `grep` কমান্ড দিয়ে `div` এর সংখ্যা চেক করা এবং ম্যানুয়ালি ফাইল ইন্সপেক্ট করা।
-*   **Work**: দেখা গেছে একটি অতিরিক্ত ক্লোজিং `</div>` ট্যাগ ছিল যা `card-body` কে আগেই ক্লোজ করে দিচ্ছিল। এটি রিমুভ করায় লেআউট এবং ফুটার পজিশন ঠিক হয়েছে।
-*   **Change**: `resources/views/backend/admin/editprofile.blade.php`.
-
-### ২০২৬-০১-২৮: অ্যাডমিন অ্যাপ মেনু লিংক ফিক্স
-*   **Event/Prompt**: অ্যাডমিন প্যানেলের হেডার মেনুতে "Web Apps" সেকশনে লিংকগুলো স্ট্যাটিক HTML ফাইলের দিকে পয়েন্ট করা ছিল এবং কিছু ফিচার মিসিং ছিল।
-*   **Plan**: `navbar.blade.php` ফাইলে "Web Apps" ড্রপডাউনের লিংকগুলো চেক করা এবং সঠিক রাউটের সাথে কানেক্ট করা।
-*   **Executing**: 
-    *   "Chat" লিংক `Backend/pages/apps/chat.html` থেকে `{{ route('admin.chat.inbox') }}` এ পরিবর্তন করা।
-    *   "Email" লিংক `Backend/pages/email/inbox.html` থেকে `{{ route('contact.index') }}` (Contact Messages) এ পরিবর্তন করা।
-    *   "Calendar" ফিচারটি এই প্রজেক্টে ইমপ্লিমেন্ট করা নেই, তাই এটি মেনু থেকে রিমুভ করা।
-*   **Work**: স্ট্যাটিক এবং ব্রোকেন লিংকগুলো ফিক্স করে অ্যাপলিকেশনের বিদ্যমান ফিচারের সাথে কানেক্ট করা হয়েছে। অপ্রয়োজনীয় মেনু আইটেম রিমুভ করা হয়েছে।
-*   **Change**: `resources/views/backend/admin/body/navbar.blade.php`.
 
 ### ২০২৬-০১-২৮: অ্যাডমিন চ্যাট ইনবক্স রাউট ফিক্স
 *   **Event/Prompt**: `/admin/chat/inbox` এ অ্যাক্সেস করলে এরর আসছিল (No Fix Error)।
 *   **Plan**: `web.php` এ রাউট ডেফিনিশন এবং `ChatController` এর মেথড নাম চেক করা।
 *   **Executing**: 
     *   `web.php` এ `BackendChatController` (alias for `ChatController`) এর মেথড নামগুলো `index`, `getMessages`, `reply` থেকে সঠিক নাম `ChatInbox`, `GetConversation`, `AdminReply` এ পরিবর্তন করা।
-    *   `index.blade.php` (ভিউ) ফাইলে AJAX রিকোয়েস্টের URL `/admin/chat/get/` থেকে `/admin/chat/get-messages/` এ আপডেট করা।
-*   **Work**: রাউট এবং কন্ট্রোলার মেথডের নাম মিসম্যাচ ফিক্স করা হয়েছে এবং ভিউ ফাইলের AJAX URL ঠিক করা হয়েছে।
-*   **Change**: `routes/web.php`, `resources/views/backend/chat/index.blade.php`.
+    *   `index.blade.php` (ভিউ) ফাইলে AJAX রিকোয়েস্টের URL `/admin/chat/get/` থেকে `/admin/chat/get-messages/` এ আপডেট করা।
+*   **Work**: রাউট এবং কন্ট্রোলার মেথডের নাম মিসম্যাচ ফিক্স করা হয়েছে এবং ভিউ ফাইলের AJAX URL ঠিক করা হয়েছে।
+*   **Change**: `routes/web.php`, `resources/views/backend/chat/index.blade.php`।
 
-## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)
-*   **কিউ ব্যাচিং (Batching)**: ১০০০+ সাবস্ক্রাইবার হয়ে গেলে `Bus::batch` অথবা চাঙ্কিং (chunking) ব্যবহার করা যাতে টাইমআউট না হয়।
-*   **ইমেইল লগ**: পাঠানো নিউজলেটারগুলোর হিস্ট্রি দেখার জন্য একটি ইউজার ইন্টারফেস (UI) তৈরি করা।
+### ২০২৬-০১-২৮: ফ্রন্টএন্ড ভিজিবিলিটি ফিক্স
+*   **Event/Prompt**: ফ্রন্টএন্ডে কিছু টেক্সট এবং বাটন হোভার করলে দেখা যাচ্ছিল না (কালার কনট্রাস্ট সমস্যা)।
+*   **Plan**: `main.css` এবং `light-mode.css` চেক করে কালার ভেরিয়েবল অ্যাডজাস্ট করা।
+*   **Executing**:
+    *   `main.css`: `.tj-btn-secondary:hover` এ `color: var(--tj-white)` যোগ করা হয়েছে।
+    *   `light-mode.css`: `.section-header.style-2 .sub-title` এর কালার `var(--tj-grey-1)` করা হয়েছে।
+    *   `main.css`: `.lead` ক্লাসের টেক্সট কালার `var(--tj-white)` করা হয়েছে (Hero section description এর জন্য)।
+    *   `light-mode.css`: লাইট মোডের জন্য `.lead` কালার `var(--tj-theme-secondary)` করা হয়েছে।
+*   **Work**: বাটন হোভার এবং লাইট মোডে টেক্সট ভিজিবিলিটি ফিক্স করা হয়েছে।
+*   **Change**: `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
+
+### ২০২৬-০১-২৮: হিরো সেকশন ফান-ফ্যাক্ট রিডিজাইন
+*   **Event/Prompt**: "Years of Experience" এবং অন্যান্য পরিসংখ্যানগুলো আরও মডার্ন লুক দেওয়ার অনুরোধ।
+*   **Plan**: `funfact-item` ক্লাসটিকে কার্ড স্টাইলে পরিবর্তন করা, গ্রেডিয়েন্ট কালার এবং হোভার ইফেক্ট যুক্ত করা।
+*   **Executing**:
+    *   `main.css`: `.funfact-item` এ প্যাডিং, বর্ডার রেডিয়াস, ব্যাকগ্রাউন্ড কালার এবং শ্যাডো যোগ করা হয়েছে। নাম্বারগুলোতে লিনিয়ার গ্রেডিয়েন্ট টেক্সট এফেক্ট দেওয়া হয়েছে।
+    *   `light-mode.css`: লাইট মোডের জন্য ব্যাকগ্রাউন্ড এবং টেক্সট কালার অ্যাডজাস্ট করা হয়েছে।
+*   **Work**: হিরো সেকশনের পরিসংখ্যানগুলো এখন কার্ড আকারে এবং আরও আকর্ষণীয় দেখাচ্ছে।
+*   **Change**: `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
+
+### ২০২৬-০১-২৮: ফুটার সাবস্ক্রিপশন ফর্ম রিফ্যাক্টর (Inline Styles Remove)
+*   **Event/Prompt**: ফুটার সাবস্ক্রিপশন ফর্মে ইনলাইন স্টাইল থাকার কারণে মেইনটেইনেন্স কঠিন হচ্ছিল।
+*   **Plan**: ইনলাইন স্টাইল সরিয়ে CSS ক্লাস ব্যবহার করা এবং স্টাইলগুলো `main.css` ফাইলে নিয়ে যাওয়া।
+*   **Executing**:
+    *   `footer.blade.php`: `div` এবং `h5` থেকে `style="..."` অ্যাট্রিবিউট রিমুভ করা হয়েছে এবং `class` (`footer-subscribe`, `footer-subscribe-title`) অ্যাড করা হয়েছে।
+    *   `main.css`: `.footer-subscribe`, `.footer-subscribe-title` এর স্টাইল আপডেট করা হয়েছে।
+    *   `light-mode.css`: লাইট মোডে টাইটেলের কালার ঠিক রাখার জন্য `color: var(--tj-white)` অ্যাড করা হয়েছে।
+*   **Work**: এখন ফুটার ফর্মের ডিজাইন `main.css` থেকে কন্ট্রোল করা যাচ্ছে, যা ক্লিন কোড এবং ফিউচার মেইনটেইনেন্স সহজ করেছে।
+*   **Change**: `resources/views/frontend/body/components/footer.blade.php`, `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
+
+### ২০২৬-০১-২৮: হিরো সেকশন টেক্সট কালার আপডেট
+*   **Event/Prompt**: "I am Tanvir Ahmed" টেক্সটের কালার আপডেট করার অনুরোধ (Update Clour)।
+*   **Plan**: "I am" এবং "Tanvir Ahmed" (Name) আলাদা স্টাইল করার জন্য HTML স্ট্রাকচার পরিবর্তন করা এবং নামের উপর গ্রেডিয়েন্ট ইফেক্ট প্রয়োগ করা।
+*   **Executing**:
+    *   `hero.blade.php`: `{{ $hero->name }}` কে `<span class="hero-name">` ট্যাগের মধ্যে র‍্যাপ করা হয়েছে।
+    *   `main.css`: `.hero-name` ক্লাসে গ্রেডিয়েন্ট কালার (Primary to White) এবং `.hero-sub-title` এ ফন্ট স্টাইল নিশ্চিত করা হয়েছে।
+    *   `light-mode.css`: লাইট মোডের জন্য `.hero-name` এ গ্রেডিয়েন্ট (Primary to Secondary) সেট করা হয়েছে।
+*   **Work**: হিরো সেকশনের নামের অংশটি এখন গ্রেডিয়েন্ট কালারে প্রদর্শিত হচ্ছে, যা আরও আকর্ষণীয় এবং মডার্ন।
+*   **Change**: `resources/views/frontend/body/components/hero.blade.php`, `public/Fontend/assets/css/main.css`, `public/Fontend/assets/css/light-mode.css`।
