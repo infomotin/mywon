@@ -274,6 +274,15 @@ php artisan queue:work
 *   **Work**: স্ট্যাটিক এবং ব্রোকেন লিংকগুলো ফিক্স করে অ্যাপলিকেশনের বিদ্যমান ফিচারের সাথে কানেক্ট করা হয়েছে। অপ্রয়োজনীয় মেনু আইটেম রিমুভ করা হয়েছে।
 *   **Change**: `resources/views/backend/admin/body/navbar.blade.php`.
 
+### ২০২৬-০১-২৮: অ্যাডমিন চ্যাট ইনবক্স রাউট ফিক্স
+*   **Event/Prompt**: `/admin/chat/inbox` এ অ্যাক্সেস করলে এরর আসছিল (No Fix Error)।
+*   **Plan**: `web.php` এ রাউট ডেফিনিশন এবং `ChatController` এর মেথড নাম চেক করা।
+*   **Executing**: 
+    *   `web.php` এ `BackendChatController` (alias for `ChatController`) এর মেথড নামগুলো `index`, `getMessages`, `reply` থেকে সঠিক নাম `ChatInbox`, `GetConversation`, `AdminReply` এ পরিবর্তন করা।
+    *   `index.blade.php` (ভিউ) ফাইলে AJAX রিকোয়েস্টের URL `/admin/chat/get/` থেকে `/admin/chat/get-messages/` এ আপডেট করা।
+*   **Work**: রাউট এবং কন্ট্রোলার মেথডের নাম মিসম্যাচ ফিক্স করা হয়েছে এবং ভিউ ফাইলের AJAX URL ঠিক করা হয়েছে।
+*   **Change**: `routes/web.php`, `resources/views/backend/chat/index.blade.php`.
+
 ## ৭. ভবিষ্যৎ পরিকল্পনা (To-Do)
 *   **কিউ ব্যাচিং (Batching)**: ১০০০+ সাবস্ক্রাইবার হয়ে গেলে `Bus::batch` অথবা চাঙ্কিং (chunking) ব্যবহার করা যাতে টাইমআউট না হয়।
 *   **ইমেইল লগ**: পাঠানো নিউজলেটারগুলোর হিস্ট্রি দেখার জন্য একটি ইউজার ইন্টারফেস (UI) তৈরি করা।

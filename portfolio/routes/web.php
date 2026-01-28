@@ -223,9 +223,9 @@ Route::middleware('auth')->group(function () {
     });
     
     // Admin Chat Inbox
-    Route::get('/admin/chat/inbox', [BackendChatController::class, 'index'])->name('admin.chat.inbox');
-    Route::get('/admin/chat/get-messages/{sessionId}', [BackendChatController::class, 'getMessages']);
-    Route::post('/admin/chat/reply', [BackendChatController::class, 'reply']);
+    Route::get('/admin/chat/inbox', [BackendChatController::class, 'ChatInbox'])->name('admin.chat.inbox');
+    Route::get('/admin/chat/get-messages/{sessionId}', [BackendChatController::class, 'GetConversation'])->name('admin.chat.get');
+    Route::post('/admin/chat/reply', [BackendChatController::class, 'AdminReply'])->name('admin.chat.reply');
 });
 
 //SubscriberController

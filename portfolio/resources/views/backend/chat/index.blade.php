@@ -98,7 +98,7 @@
         if (!currentSessionId) return;
 
         $.ajax({
-            url: '/admin/chat/get/' + currentSessionId,
+            url: '/admin/chat/get-messages/' + currentSessionId,
             method: 'GET',
             success: function(messages) {
                 let html = '<ul class="list-unstyled">';
