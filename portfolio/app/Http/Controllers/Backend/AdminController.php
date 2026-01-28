@@ -47,9 +47,18 @@ class AdminController extends Controller
             $admin->profile_photo_path = $filename;
         }
         $admin->name = $request->name;
+        $admin->first_name = $request->first_name;
+        $admin->last_name = $request->last_name;
         $admin->username = $request->username;
         $admin->phone = $request->phone;
         $admin->address = $request->address;
+        $admin->about = $request->about;
+        $admin->website = $request->website;
+        $admin->github = $request->github;
+        $admin->twitter = $request->twitter;
+        $admin->instagram = $request->instagram;
+        $admin->linkedin = $request->linkedin;
+        $admin->facebook = $request->facebook;
         $admin->email = $request->email;
         $admin->role = $request->role;
         $admin->save();

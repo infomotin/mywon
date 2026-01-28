@@ -71,14 +71,14 @@
                       </div>
                     </div>
                   </div>
-                  <p>Hi! I'm Amiah the Senior UI Designer at NobleUI. We hope you enjoy the design and quality of Social.</p>
+                  <p>{{ $admin->about ?? 'Update your profile to add a bio.' }}</p>
                   <div class="mt-3">
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">Joined:</label>
                     <p class="text-muted">{{ $admin->created_at->diffForHumans() }}</p>
                   </div>
                   <div class="mt-3">
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">Lives:</label>
-                    <p class="text-muted">{{ $admin->address }}</p>
+                    <p class="text-muted">{{ $admin->address ?? 'Not Set' }}</p>
                   </div>
                   <div class="mt-3">
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">Email:</label>
@@ -86,18 +86,35 @@
                   </div>
                   <div class="mt-3">
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">Website:</label>
-                    <p class="text-muted">www.nobleui.com</p>
+                    <p class="text-muted"><a href="{{ $admin->website }}" target="_blank">{{ $admin->website ?? 'Not Set' }}</a></p>
                   </div>
                   <div class="mt-3 d-flex social-links">
-                    <a href="javascript:;" class="btn btn-icon border btn-xs me-2">
+                    @if($admin->github)
+                    <a href="{{ $admin->github }}" target="_blank" class="btn btn-icon border btn-xs me-2">
                       <i data-feather="github"></i>
                     </a>
-                    <a href="javascript:;" class="btn btn-icon border btn-xs me-2">
+                    @endif
+                    @if($admin->twitter)
+                    <a href="{{ $admin->twitter }}" target="_blank" class="btn btn-icon border btn-xs me-2">
                       <i data-feather="twitter"></i>
                     </a>
-                    <a href="javascript:;" class="btn btn-icon border btn-xs me-2">
+                    @endif
+                    @if($admin->instagram)
+                    <a href="{{ $admin->instagram }}" target="_blank" class="btn btn-icon border btn-xs me-2">
                       <i data-feather="instagram"></i>
                     </a>
+                    @endif
+                    @if($admin->linkedin)
+                    <a href="{{ $admin->linkedin }}" target="_blank" class="btn btn-icon border btn-xs me-2">
+                      <i data-feather="linkedin"></i>
+                    </a>
+                    @endif
+                    @if($admin->facebook)
+                    <a href="{{ $admin->facebook }}" target="_blank" class="btn btn-icon border btn-xs me-2">
+                      <i data-feather="facebook"></i>
+                    </a>
+                    @endif
+                  </div>
                   </div>
                 </div>
               </div>
@@ -134,29 +151,106 @@
                       $table->string('password');
                       $table->string('profile_photo_path')->nullable(); --}}
 
-                      <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ $admin->name }}">
-                      </div>
-                      <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ $admin->username }}" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="{{ $admin->phone }}" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="{{ $admin->address }}" required>
+                      <h6 class="card-title mb-3">Personal Information</h6>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{ $admin->first_name }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{ $admin->last_name }}">
+                          </div>
+                        </div>
                       </div>
 
-                      <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $admin->email }}" required readonly>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="name">Display Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ $admin->name }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ $admin->username }}" readonly>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $admin->email }}" required readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="{{ $admin->phone }}">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="{{ $admin->address }}">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="about">About</label>
+                        <textarea class="form-control" id="about" name="about" rows="4" placeholder="Write something about yourself...">{{ $admin->about }}</textarea>
+                      </div>
+
+                      <h6 class="card-title mb-3 mt-4">Social Links</h6>
+                      
+                      <div class="form-group mb-3">
+                        <label for="website">Website URL</label>
+                        <input type="text" class="form-control" id="website" name="website" placeholder="https://yourwebsite.com" value="{{ $admin->website }}">
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="github">GitHub URL</label>
+                            <input type="text" class="form-control" id="github" name="github" placeholder="https://github.com/username" value="{{ $admin->github }}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="twitter">Twitter URL</label>
+                            <input type="text" class="form-control" id="twitter" name="twitter" placeholder="https://twitter.com/username" value="{{ $admin->twitter }}">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="instagram">Instagram URL</label>
+                            <input type="text" class="form-control" id="instagram" name="instagram" placeholder="https://instagram.com/username" value="{{ $admin->instagram }}">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="linkedin">LinkedIn URL</label>
+                            <input type="text" class="form-control" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" value="{{ $admin->linkedin }}">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="facebook">Facebook URL</label>
+                            <input type="text" class="form-control" id="facebook" name="facebook" placeholder="https://facebook.com/username" value="{{ $admin->facebook }}">
+                          </div>
+                        </div>
                       </div>
                       
-                      <div class="form-group" readonly>
+                      <div class="form-group mb-3" readonly>
                         <label for="role">Role</label>
                         <select class="form-control" id="role" name="role">
                           <option value="admin" {{ $admin->role == 'admin' ? 'selected' : '' }}>Admin</option>
@@ -164,10 +258,10 @@
                         </select>
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group mb-3">
                         <label for="image">Profile Image</label>
                         <input type="file" class="form-control" id="image" name="profile_photo_path" accept="image/*" >
-                        <img id="image-preview" src="{{ $admin->profile_photo_url }}" alt="Your profile image" style="max-width: 100px; margin-top: 20px; margin-bottom: 20px">
+                        <img id="image-preview" src="{{ ($admin->profile_photo_path) ? asset('upload/admin_images/' . $admin->profile_photo_path) : asset('backend/assets/images/faces/1.jpg') }}" alt="Your profile image" style="max-width: 100px; margin-top: 20px; margin-bottom: 20px">
                       </div>
                       <button type="submit" class="btn btn-primary">Update</button>
                     </form>

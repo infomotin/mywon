@@ -189,7 +189,7 @@ php artisan queue:work
 *   **Event/Prompt**: অ্যাডমিন ড্যাশবোর্ডে একটি Security Section তৈরি করা, যেখান থেকে Login Page Captcha, Brute Force Attack Prevention, User Login Log এবং 3D Verification Email (2FA) ম্যানেজ করা যাবে।
 *   **Plan**: `SecuritySetting` এবং `LoginLog` model তৈরি করা, `SecurityController` দিয়ে settings update করা, এবং Authentication flow-তে captcha, logging এবং 2FA check যুক্ত করা।
 *   **Executing**: Migration run করা, Model ও Controller তৈরি করা, Middleware add করা এবং Login logic update করা।
-*   **Work**:
+*   **Work**: `SecuritySetting` মডেল তৈরি করে সেটিংস ম্যানেজ করা হয়েছে। `LoginLog` মডেল দিয়ে লগিন হিস্ট্রি রাখা হচ্ছে। `AuthenticatedSessionController` এবং `LoginRequest`-এ 2FA এবং Captcha লজিক ইন্টিগ্রেট করা হয়েছে।
     *   Security Manager Dashboard তৈরি করা হয়েছে (Captcha, Brute Force, Logs, 2FA enable/disable options সহ)।
     *   Login Page-এ Captcha integration করা হয়েছে।
     *   Brute Force logging limit control করা হয়েছে (3 vs 5 attempts)।
@@ -205,6 +205,20 @@ php artisan queue:work
 *   **Executing**: `TestSmtp` কমান্ড তৈরি করে মেইল কনফিগারেশন টেস্ট করা।
 *   **Work**: দেখা গেছে `AppServiceProvider`-এ `Config::set('mail.mailers.smtp', ...)` কনফিগারেশনে `driver` কি (key) ব্যবহার করা হচ্ছিল, কিন্তু লারাভেল `transport` কি (key) আশা করে।
 *   **Change**: `AppServiceProvider.php`-এ `driver` পরিবর্তন করে `transport` করা হয়েছে। এখন ইমেইল সঠিকভাবে সেন্ড হচ্ছে।
+
+### ২০২৬-০১-২৮: অ্যাডমিন প্রোফাইল আপডেট
+*   **Event/Prompt**: অ্যাডমিন প্রোফাইল পেজে নাম (First/Last), সোশ্যাল লিঙ্কস এবং বায়ো (About) সেকশন যুক্ত করা।
+*   **Plan**: `users` টেবিলে নতুন কলাম যুক্ত করা, `User` মডেল আপডেট করা, এবং `AdminController` ও `editprofile.blade.php` ভিউ আপডেট করা।
+*   **Executing**: `php artisan make:migration add_columns_to_users_table` কমান্ড রান করা এবং মাইগ্রেশন সম্পন্ন করা।
+*   **Work**: `users` টেবিলে `first_name`, `last_name`, `phone`, `address`, `about`, `website` এবং সোশ্যাল লিঙ্ক (`github`, `twitter` etc.) কলাম যুক্ত করা হয়েছে। `User` মডেলে এগুলোকে `fillable` করা হয়েছে। `AdminController`-এ `updateProfile` মেথড আপডেট করে নতুন ডাটা সেভ করার ব্যবস্থা করা হয়েছে এবং ভিউ ফাইলে ইনপুট ফিল্ড ও ডিসপ্লে লজিক বসানো হয়েছে।
+*   **Change**: `users` table migration, `User.php`, `AdminController.php`, `editprofile.blade.php`.
+
+### ২০২৬-০১-২৮: অ্যাডমিন এডিট প্রোফাইল পেজ এরর ফিক্স
+*   **Event/Prompt**: `/edit-profile` পেজে এরর আসছিল (undefined property `profile_photo_url`)।
+*   **Plan**: `editprofile.blade.php` ফাইলে `profile_photo_url` এর ব্যবহার চেক করা এবং ফিক্স করা।
+*   **Executing**: ভিউ ফাইলে ইমেজ সোর্স পাথ আপডেট করা।
+*   **Work**: `profile_photo_url` (যা Jetstream এর অংশ) পরিবর্তন করে কাস্টম পাথ লজিক `asset('upload/admin_images/' ...)` বসানো হয়েছে, যা ফাইলের উপরের অংশেও ব্যবহার করা হয়েছে।
+*   **Change**: `editprofile.blade.php`.
 
 ---
 
